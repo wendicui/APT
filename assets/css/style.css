@@ -27,21 +27,29 @@
 }
 
 #custom-search-input .glyphicon-search{
-    font-size: 23px;
+    font-size: 20px;
 }
 
 #search-box {
     position: absolute;
-    top: 30%;
+    top: 35%;
     left: 28%
 }
 
+html,
+body,
+.view {
+    height: 100%;
+}
 
-.full {
-    background: url('assets/images/cityview2.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
+.view {
+    background: url("assets/images/cityview2.jpg")
+    no-repeat center center fixed;
     background-size: cover;
-    -o-background-size: cover;
-    height:100%;
+    background-position: center; 
+
+
+}
+body {
+    background-color: black;
 }
