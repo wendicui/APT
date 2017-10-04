@@ -2,18 +2,21 @@
 <html>
 <head>
 	<title>Project One</title>
+    <!-- reset and bootstrap -->
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <!-- mapbox api -->
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.40.0/mapbox-gl.css' rel='stylesheet' />
-
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
 </head>
-<body>
+<body id="home">
 
-<div id="search-box>
+<div id="search-box">
 <div class="container">
 	<div class="row">
         <div class="col-md-6">
@@ -22,9 +25,9 @@
                 <div class="input-group col-md-12">
                     <input type="text" class="form-control input-lg" placeholder="Address, Zip Code" />
                     <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button">
-                            <i class="glyphicon glyphicon-search"></i>
 
+                            <button class="btn btn-info btn-lg" type="button" id="firstsearch"><!-- giving id for button to go search html -->
+                                <i class="glyphicon glyphicon-search"></i>
                         </button>
                     </span>
                 </div>
@@ -41,7 +44,7 @@
     <div id="hero-overlay"></div>
 </div>
 
-
+<script type="text/javascript" src="assets/javascript/javascript.js"></script>
 
 </body>
 </html>
