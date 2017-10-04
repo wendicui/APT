@@ -46,10 +46,25 @@ body,
     background: url("assets/images/cityview2.jpg")
     no-repeat center center fixed;
     background-size: cover;
-    background-position: center; 
+    background-position: center;
 
 
 }
-body {
+/*body {
     background-color: black;
+}*/
+
+.searchbox, .fulladdress, .traffic, .schoolNearby{
+    background-color: yellow;
+    margin: 50px;
+}
+.mapimage, .map{
+    background-color: blue;
+    float: right;
+    width: 30%;
+    margin: 50px;
+}
+
+.map{
+    position: fixed;
 }
