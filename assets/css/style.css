@@ -3,7 +3,7 @@
     border: solid 1px #E4E4E4;
     border-radius: 6px;
     background-color: #fff;
-    font-weight: 100; 
+    font-weight: 100;
 }
 
 #custom-search-input input{
@@ -38,9 +38,9 @@
 }
 
 #homeFind {
-    color: #ffffff; 
+    color: #ffffff;
     font-weight: 100;
-    font-size: 16; 
+    font-size: 16;
 
 }
 
@@ -56,25 +56,25 @@
     margin: 50px;
 }
 
-body {
-    background-image: url("../images/cityview2.jpg"); 
-    background-size: cover; 
-    background-position: center center; 
+body#home {
+    background-image: url("../images/cityview2.jpg");
+    background-size: cover;
+    background-position: center center;
     position: relative;
-    top: 0; 
+    top: 0;
     bottom: 0;
     height: 100vh;
-    z-index: -10; 
+    z-index: -10;
 
 }
 
 #hero-overlay {
-    position: absolute; 
-    top: 0; 
+    position: absolute;
+    top: 0;
     bottom: 0;
     height: 100%;
     width: 100%;
-    z-index: -5; 
+    z-index: -5;
     background-color: rgba(0,0,0,0.3);
 }
 
