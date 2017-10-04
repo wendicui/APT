@@ -3,6 +3,7 @@
     border: solid 1px #E4E4E4;
     border-radius: 6px;
     background-color: #fff;
+    font-weight: 100; 
 }
 
 #custom-search-input input{
@@ -32,27 +33,15 @@
 
 #search-box {
     position: absolute;
-    top: 35%;
+    top: 50%;
     left: 28%
 }
 
-html,
-body,
-.view {
-    height: 100%;
+#homeFind {
+    color: #ffffff; 
+    font-weight: 100;
+    font-size: 16; 
 }
-
-.view {
-    background: url("assets/images/cityview2.jpg")
-    no-repeat center center fixed;
-    background-size: cover;
-    background-position: center;
-
-
-}
-/*body {
-    background-color: black;
-}*/
 
 .searchbox, .fulladdress, .traffic, .schoolNearby{
     background-color: yellow;
@@ -65,8 +54,27 @@ body,
     margin: 50px;
 }
 
-/*.map{
-    position: fixed;
-    float: right;
+body {
+    background-image: url("../images/cityview2.jpg"); 
+    background-size: cover; 
+    background-position: center center; 
+    position: relative;
+    top: 0; 
+    bottom: 0;
+    height: 100vh;
+    z-index: -10; 
 
-}*/
+}
+
+#hero-overlay {
+    position: absolute; 
+    top: 0; 
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -5; 
+    background-color: rgba(0,0,0,0.3);
+}
+
+
+
