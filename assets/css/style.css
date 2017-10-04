@@ -41,26 +41,21 @@
     color: #ffffff; 
     font-weight: 100;
     font-size: 16; 
+
 }
 
-/*html,
-body,
-.view {
-    height: 100%;
+
+.searchbox, .fulladdress, .traffic, .schoolNearby{
+    background-color: yellow;
+    margin: 50px;
+}
+.mapimage, .map{
+    background-color: blue;
+    float: right;
+    width: 30%;
+    margin: 50px;
 }
 
-.view {
-    background: url("assets/images/cityview2.jpg")
-    no-repeat center center fixed;
-    background-size: cover;
-    background-position: center; 
-    z-index: -1; 
-
-}*/
-/*/*body {
-    background-color: black;
-}
-*/
 body {
     background-image: url("../images/cityview2.jpg"); 
     background-size: cover; 
@@ -82,5 +77,6 @@ body {
     z-index: -5; 
     background-color: rgba(0,0,0,0.3);
 }
+
 
 
