@@ -27,8 +27,6 @@ $(document).ready(function(){
 
 
 
-
-
     //get gocation of the user input, to center map and generate output for onboard
     function createGeo(){
         var accessToken = "pk.eyJ1Ijoic3BoMW54ZWQiLCJhIjoiY2o4OXI5NXpvMDZ6aTMzbWswaTFkMDNhZSJ9.AiNtXZkRzbZk-8d4PQJLww"
@@ -38,16 +36,20 @@ $(document).ready(function(){
         $.ajax({
             url:url,
             method:"get"
-        }).done(function(data){
+        }).done(setGeo)
+
+    }
+
+
+    function setGeo(data){
             latitude = data.features[0].center[0];
             longitude = data.features[0].center[1];
-            console.log(latitude)
-            console.log(longitude)
             map.flyTo({
-                center:[ latitude,longitude]
+                center:[latitude,longitude]
             })
-        })
-
+            latitude = latitude.toString()
+            longitude = longitude.toString()
+            drawData()
     }
 
   
@@ -57,29 +59,24 @@ $(document).ready(function(){
 
  // create function for click event ,using property snapshot under proerty extended
     function drawData(){
-        createGeo();
-        // console.log("working")
-        // latitude = "39.296864"
-        // longitude = "-75.613574"
-        // var radius = "20"
       
+        var radius = "20"
+        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT`
 
-        // var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT`
-
-        // $.ajax({
-        //     url:url,
-        //     method:"get",
-        //     headers:{
-        //         'apikey': "aca334dc11f0a75eede8b6a5842796ab"
-        //     }
-        // }).done(function(data){
-        //     console.log(data)
-        // })
+        $.ajax({
+            url:url,
+            method:"get",
+            headers:{
+                'apikey': "aca334dc11f0a75eede8b6a5842796ab"
+            }
+        }).done(function(data){
+            console.log(data)
+        })
     }   
 
 
 
-    $("button").on("click", drawData)
+    $("button").on("click", createGeo)
 
 });
 
