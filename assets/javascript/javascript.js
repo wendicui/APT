@@ -1,22 +1,28 @@
 $(document).ready(function(){
 
-
+    var latitude;
+    var longitude;
+    var center;
 
     function firstsearch() {
         window.location.href = "search.html";
     }
 //mapbox------------------------------------------------------------------------------------------------------------------------------
-    mapboxgl.accessToken = 'pk.eyJ1IjoicnVkY2tzOTEiLCJhIjoiY2o4ZHE1YXZtMHQ2NDJ4bW8xbGJzYmZrOCJ9.kGjczis6tYLYQLDnoRt_dg';
-    var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'mapbox://styles/mapbox/streets-v9',
-        center: [-74.50, 40], // starting position
-        zoom: 9 // starting zoom
-    });
+   function createMap(center){
+        mapboxgl.accessToken = 'pk.eyJ1IjoicnVkY2tzOTEiLCJhIjoiY2o4ZHE1YXZtMHQ2NDJ4bW8xbGJzYmZrOCJ9.kGjczis6tYLYQLDnoRt_dg';
+        var map = new mapboxgl.Map({
+            container: 'map', // container id
+            style: 'mapbox://styles/mapbox/streets-v9',
+            center: center, // starting position
+            zoom: 9 // starting zoom
+        });
 
     // Add zoom and rotation controls to the map.
-    map.addControl(new mapboxgl.NavigationControl());
+         map.addControl(new mapboxgl.NavigationControl());
+   }
 
+  
+   createMap([-73.9808, 40.7648])
 
 
 
@@ -32,7 +38,10 @@ $(document).ready(function(){
             url:url,
             method:"get"
         }).done(function(data){
-            console.log(data)
+            latitude = data.features[0].center[0];
+            longitude = data.features[0].center[0];
+            console.log(latitude)
+
         })
 
     }
@@ -46,8 +55,8 @@ $(document).ready(function(){
     function drawData(){
         createGeo();
         // console.log("working")
-        // var latitude = "39.296864"
-        // var longitude = "-75.613574"
+        // latitude = "39.296864"
+        // longitude = "-75.613574"
         // var radius = "20"
       
 
