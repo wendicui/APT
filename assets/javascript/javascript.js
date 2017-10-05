@@ -3,6 +3,7 @@ $(document).ready(function(){
     var latitude;
     var longitude;
     var center;
+    var map;
 
     function firstsearch() {
         window.location.href = "search.html";
@@ -10,7 +11,7 @@ $(document).ready(function(){
 //mapbox------------------------------------------------------------------------------------------------------------------------------
    function createMap(center){
         mapboxgl.accessToken = 'pk.eyJ1IjoicnVkY2tzOTEiLCJhIjoiY2o4ZHE1YXZtMHQ2NDJ4bW8xbGJzYmZrOCJ9.kGjczis6tYLYQLDnoRt_dg';
-        var map = new mapboxgl.Map({
+        map = new mapboxgl.Map({
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/streets-v9',
             center: center, // starting position
@@ -22,7 +23,7 @@ $(document).ready(function(){
    }
 
   
-   createMap([-73.9808, 40.7648])
+   createMap([-72.9808, 40.7648])
 
 
 
@@ -39,9 +40,12 @@ $(document).ready(function(){
             method:"get"
         }).done(function(data){
             latitude = data.features[0].center[0];
-            longitude = data.features[0].center[0];
+            longitude = data.features[0].center[1];
             console.log(latitude)
-
+            console.log(longitude)
+            map.flyTo({
+                center:[ latitude,longitude]
+            })
         })
 
     }
