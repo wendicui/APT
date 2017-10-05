@@ -4,24 +4,29 @@ $(document).ready(function(){
 
     function firstsearch() {
         window.location.href = "search.html";
-    } 
-  mapboxgl.accessToken = 'pk.eyJ1IjoiaWFtYXJpcm9zZW50aGFsIiwiYSI6ImNqOGRsc204bzBwbnAyd2xibnpqZG4wYmMifQ.rtRd33gsmY5DGiQkkJoj9g';
-  var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v10'
-  });
+    }
 
+mapboxgl.accessToken = 'pk.eyJ1IjoicnVkY2tzOTEiLCJhIjoiY2o4ZHE1YXZtMHQ2NDJ4bW8xbGJzYmZrOCJ9.kGjczis6tYLYQLDnoRt_dg';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v9',
+    center: [-74.50, 40], // starting position
+    zoom: 9 // starting zoom
+});
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
 
 
     $("#firstsearch").click(firstsearch);
 
- // create function for click event   
+ // create function for click event
     function drawData(){
         console.log("working")
         var address1 = "468%20SEQUOIA%20DR"
         var address2 = "SMYRNA%2C%20DE"
         var radius = "20"
-        var min 
+        var min
         var max
 
 
