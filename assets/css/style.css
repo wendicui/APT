@@ -50,13 +50,14 @@
     margin: 50px;
 }
 .mapimage, .map{
-    background-color: blue;
     float: right;
     width: 30%;
-    margin: 50px;
+    margin: 0;
+    padding: 0;
+    box-shadow: 10px 10px 5px #BD6AEE;
 }
 
-body#home {
+body {
     background-image: url("../images/cityview2.jpg");
     background-size: cover;
     background-position: center center;
