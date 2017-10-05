@@ -15,7 +15,7 @@ $(document).ready(function(){
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/streets-v9',
             center: center, // starting position
-            zoom: 9 // starting zoom
+            zoom: 12 // starting zoom
         });
 
     // Add zoom and rotation controls to the map.
@@ -42,14 +42,16 @@ $(document).ready(function(){
 
 
     function setGeo(data){
-            latitude = data.features[0].center[0];
-            longitude = data.features[0].center[1];
+
+            latitude = data.features[0].center[1];
+            longitude = data.features[0].center[0];
             map.flyTo({
-                center:[latitude,longitude]
+                center:[longitude, latitude]
             })
             latitude = latitude.toString()
             longitude = longitude.toString()
             drawData()
+
     }
 
   
@@ -62,7 +64,7 @@ $(document).ready(function(){
       
         var radius = "20"
         var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT`
-
+        console.log(url)
         $.ajax({
             url:url,
             method:"get",
