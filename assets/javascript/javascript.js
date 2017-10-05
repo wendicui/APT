@@ -6,6 +6,7 @@ $(document).ready(function(){
         window.location.href = "search.html";
     }
 
+
 mapboxgl.accessToken = 'pk.eyJ1IjoicnVkY2tzOTEiLCJhIjoiY2o4ZHE1YXZtMHQ2NDJ4bW8xbGJzYmZrOCJ9.kGjczis6tYLYQLDnoRt_dg';
 var map = new mapboxgl.Map({
     container: 'map', // container id
@@ -20,19 +21,18 @@ map.addControl(new mapboxgl.NavigationControl());
 
     $("#firstsearch").click(firstsearch);
 
+
  // create function for click event
     function drawData(){
-        console.log("working")
+        
         var address1 = "468%20SEQUOIA%20DR"
         var address2 = "SMYRNA%2C%20DE"
         var radius = "20"
         var min
         var max
+        
+        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/assessment/snapshot?address1=${address1}&address2=${address2}&radius=${radius}`
 
-
-        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/
-        assessment/snapshot?address1=${address1}&address2=${address2}
-        &radius=${radius}`
 
         $.ajax({
             url:url,
@@ -47,7 +47,7 @@ map.addControl(new mapboxgl.NavigationControl());
 
 
 
-    $("button").on("click", drawData)
+$("button").on("click", drawData)
 
 });
 
