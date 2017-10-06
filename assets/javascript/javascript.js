@@ -20,6 +20,7 @@ $(document).ready(function(){
 
     // Add zoom and rotation controls to the map.
          map.addControl(new mapboxgl.NavigationControl());
+       
    }
 
   
@@ -48,8 +49,7 @@ $(document).ready(function(){
             map.flyTo({
                 center:[longitude, latitude]
             })
-            latitude = latitude.toString()
-            longitude = longitude.toString()
+
             drawData()
 
     }
@@ -61,18 +61,28 @@ $(document).ready(function(){
 
  // create function for click event ,using property snapshot under proerty extended
     function drawData(){
-      
-        var radius = "20"
-        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT`
+        console.log(longitude);
+        console.log(latitude);
+        var radius = "3"
+        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT&orderby=calendardate&PageSize=20`
         console.log(url)
         $.ajax({
             url:url,
             method:"get",
             headers:{
-                'apikey': "aca334dc11f0a75eede8b6a5842796ab"
-            }
+                'apikey': "aca334dc11f0a75eede8b6a5842796ab",
+                'accept': 'application/json'
+            },
+           
         }).done(function(data){
-            console.log(data)
+           console.log(data)
+            for (var i = 0; i < 20; i++) {
+                latitude = data.property[i].location.latitude;
+                longitude = data.property[i].location.longitude;
+                var marker = new mapboxgl.Marker()
+                            .setLngLat([longitude,latitude])
+                            .addTo(map)
+            }
         })
     }   
 
