@@ -4,11 +4,22 @@ $(document).ready(function(){
     var longitude;
     var center;
     var map;
+    var zoom
 
     function firstsearch() {
         window.location.href = "search.html";
     }
 //mapbox------------------------------------------------------------------------------------------------------------------------------
+   function getMapInfo(){
+
+    latitude = map.transform.center.lat
+    longitude = map.transform.center.lng
+    zoom = map.transform.zoom
+
+    console.log(latitude)
+    console.log(zoom)
+   }
+
    function createMap(center){
         mapboxgl.accessToken = 'pk.eyJ1IjoicnVkY2tzOTEiLCJhIjoiY2o4ZHE1YXZtMHQ2NDJ4bW8xbGJzYmZrOCJ9.kGjczis6tYLYQLDnoRt_dg';
         map = new mapboxgl.Map({
@@ -20,6 +31,14 @@ $(document).ready(function(){
 
     // Add zoom and rotation controls to the map.
          map.addControl(new mapboxgl.NavigationControl());
+
+         map.on("zoom", getMapInfo)
+
+         // var centerLat = map.transform.center.lat
+         // var centerLng = map.transform.center.lng
+         // var zoom = map.transform.zoom
+         // console.log(centerLng)
+         // console.log(zoom)
        
    }
 
