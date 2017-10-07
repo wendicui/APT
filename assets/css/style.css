@@ -49,18 +49,21 @@
     background-color: yellow;
     margin: 50px;
 }
-  #map {
+
+
+#map{
     float: right;
     width: 30%;
-    margin: 50px;
-    left: 105%;
-
+    margin: 0;
+    padding: 0;
+    box-shadow: 10px 10px 5px #BD6AEE;
 }
 
 body {
-    background-image: url("../images/cityview2.jpg"); 
-    background-size: cover; 
-    background-position: center center; 
+    background-image: url("../images/cityview2.jpg");
+    background-size: cover;
+    background-position: center center;
+
     position: relative;
     top: 0; 
     bottom: 0;
@@ -78,6 +81,7 @@ body {
     z-index: -5; 
     background-color: rgba(0,0,0,0.3);
 }
+
 
  /*Search Page */
  #map {
@@ -109,6 +113,14 @@ body {
     top: 55%;
 
 
+
+.mapboxgl-marker{
+    width:25px;
+    height:25px;
+    border-radius: 50%;
+    cursor:pointer;
+    background-color: red;
+
 }
 
 .form-group { 
@@ -116,6 +128,12 @@ body {
     font-weight: 100; 
  }
 
+
  .text-muted {
     color: white; 
  }
+
+.mapnone{
+    display: none;
+}
+
