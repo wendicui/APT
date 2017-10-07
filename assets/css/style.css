@@ -61,7 +61,7 @@
 
 
 body {
-    background-image: url("../images/cityview2.jpg");
+    background-image: url("../images/cityview2.JPG");
     background-size: cover;
     background-position: center center;
 
@@ -113,7 +113,8 @@ body {
     left: 12%;
     top: 55%;
 
-    }
+}
+
 
 
 .mapboxgl-marker{
