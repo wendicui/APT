@@ -4,20 +4,28 @@ $(document).ready(function(){
     var longitude;
     var center;
     var map;
-    var zoom
+    var zoom;
+    var get;
+    var timer
 
     function firstsearch() {
         window.location.href = "search.html";
     }
 //mapbox------------------------------------------------------------------------------------------------------------------------------
+   function checkGet(){
+        clearTimeout(timer);
+        timer = setTimeout(getMapInfo,2000)
+        
+   }
+
+
    function getMapInfo(){
-
-    latitude = map.transform.center.lat
-    longitude = map.transform.center.lng
-    zoom = map.transform.zoom
-
-    console.log(latitude)
-    console.log(zoom)
+    
+        latitude = map.transform.center.lat
+        longitude = map.transform.center.lng
+        zoom = map.transform.zoom
+        console.log(latitude)
+        
    }
 
    function createMap(center){
@@ -30,19 +38,15 @@ $(document).ready(function(){
         });
 
     // Add zoom and rotation controls to the map.
-         map.addControl(new mapboxgl.NavigationControl());
+         //map.addControl(new mapboxgl.NavigationControl());
+         zoom = map.transform.zoom;
+         map.on("zoom", checkGet)
+         map.on("drag", checkGet)
+         map.on("pan", checkGet)
 
-         map.on("zoom", getMapInfo)
-
-         // var centerLat = map.transform.center.lat
-         // var centerLng = map.transform.center.lng
-         // var zoom = map.transform.zoom
-         // console.log(centerLng)
-         // console.log(zoom)
-       
    }
 
-  
+
    createMap([-72.9808, 40.7648])
 
 
@@ -71,9 +75,20 @@ $(document).ready(function(){
 
             drawData()
 
-    }
+    };
+//Save search addresses onto user local storage
 
+$("#search-box").on("click", function(event) {
+    event.preventDefault();
+    var userSearch = $("#search-box").val().trim();
+    
+        localStorage.setItem("search", userSearch);
+    
+        $("#search-history").html(localStorage.getItem("search"));
+    
+        });
   
+
 
 //ONBOARD----------------------------------------------------------------------------------------------------------------------------
     $("#firstsearch").click(firstsearch);
@@ -82,7 +97,7 @@ $(document).ready(function(){
     function drawData(){
         console.log(longitude);
         console.log(latitude);
-        var radius = "3"
+        var radius = `${zoom/4}`
         var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT&orderby=calendardate&PageSize=20`
         console.log(url)
         $.ajax({
@@ -92,7 +107,7 @@ $(document).ready(function(){
                 'apikey': "aca334dc11f0a75eede8b6a5842796ab",
                 'accept': 'application/json'
             },
-           
+
         }).done(function(data){
            console.log(data)
             for (var i = 0; i < 20; i++) {
@@ -103,13 +118,12 @@ $(document).ready(function(){
                             .addTo(map)
             }
         })
-    }   
+    }
 
 
 
     $("button").on("click", createGeo)
 
 });
-
 
 
