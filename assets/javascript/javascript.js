@@ -44,6 +44,7 @@ $(document).ready(function(){
          map.on("drag", checkGet)
          map.on("pan", checkGet)
 
+
    }
 
 
