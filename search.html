@@ -19,7 +19,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <h2>Find A Home</h2>
+            <h2>Search a new address</h2>
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
                     <input type="text" class="form-control input-lg" placeholder="Address, Zip Code" />
@@ -36,27 +36,82 @@
 <br><br>
 
 <!-- this is where the search shows -->
-<!-- <div class="row searchbox">
-    address and some information(ex. school, traffic etc..) of the rent
-    <div class="mapimage">
-    map
-    </div>
-</div> -->
+<div class="row searchbox">
+    This box should display information regarding how many bedrooms, rent, ammenities, price. 
+</div>
 
 
 <!--  this will be replace by the rent api!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! and need to discuss how many search we can see-->
-<!-- <div class="row searchbox">
-    address and some information(ex. school, traffic etc..) of the rent
-    <div class="mapimage">
-    map
-    </div>
-</div> -->
+<div class="row searchresults">
+    school information, traffic, etc
+</div>
 
-<<div class="col-md-6 map">
+<div class="col-md-6 map">
          <div id='map' style='width: 500px; height: 600px;'>
+
         </div>
     </div>
 <!--  this will be replace by the rent api!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+<!-- Contact box -->
+<form id="contact-form" method="post" action="contact.php" role="form">
+
+    <div class="messages"></div>
+
+    <div class="controls">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">First Name *</label>
+                    <input id="userInfo" type="text" name="name" class="form-control" placeholder="First Name" required="required" data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_lastname">Last Name *</label>
+                    <input id="userInfo" type="text" name="surname" class="form-control" placeholder="Last Name" required="required" data-error="Lastname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_email">Email *</label>
+                    <input id="userInfo" type="email" name="email" class="form-control" placeholder="Email" required="required" data-error="Valid email is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_phone">Phone</label>
+                    <input id="UserInfo" type="tel" name="phone" class="form-control" placeholder="Phone Number (with area code)">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="form_message">Message the landlord. *</label>
+                    <textarea id="userInfo" name="message" class="form-control" placeholder="Hi! I would like to get more infomation regarding the apartment at...." rows="4" required="required" data-error="Please,leave us a message."></textarea>
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-12" id="submitButton">
+                <input type="submit" class="btn btn-success btn-send" value="Send message">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-muted"><strong>*</strong> These fields are required.</p>
+            </div>
+        </div>
+    </div>
+
+</form>
 
 <script type="text/javascript" src="assets/javascript/javascript.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>
