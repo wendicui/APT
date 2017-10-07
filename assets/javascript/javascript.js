@@ -52,4 +52,17 @@ map.addControl(new mapboxgl.NavigationControl());
 });
 
 
+//Save search addresses onto user local storage
 
+$("#search-box").on("click", function(event) {
+    event.preventDefault();
+    var userSearch = $("#search-box").val().trim();
+    
+        localStorage.setItem("search", userSearch);
+    
+        $("#search-history").html(localStorage.getItem("search"));
+    
+        });
+    
+        $("#search-history").html(localStorage.getItem("search"));
+    
