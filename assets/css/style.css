@@ -50,12 +50,13 @@
     margin: 50px;
 }
 
-  #map {
+
+#map{
     float: right;
     width: 30%;
-    margin: 50px;
-    left: 105%;
-
+    margin: 0;
+    padding: 0;
+    
 }
 
 
@@ -63,6 +64,7 @@ body {
     background-image: url("../images/cityview2.jpg");
     background-size: cover;
     background-position: center center;
+
     position: relative;
     top: 0; 
     bottom: 0;
@@ -86,6 +88,7 @@ body {
     background-image: url("../images/map.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    left: 95%; 
  }
 
  .searchbox {
@@ -111,6 +114,7 @@ body {
     top: 55%;
 
     }
+
 
 .mapboxgl-marker{
     width:25px;
