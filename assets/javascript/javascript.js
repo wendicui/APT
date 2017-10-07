@@ -76,7 +76,7 @@ $(document).ready(function(){
 
 
 //ONBOARD----------------------------------------------------------------------------------------------------------------------------
-    $("#firstsearch").click(firstsearch);
+    // $("#firstsearch").click(firstsearch);
 
  // create function for click event ,using property snapshot under proerty extended
     function drawData(){
