@@ -6,9 +6,9 @@ $(document).ready(function(){
     var map;
     var zoom
 
-    function firstsearch() {
-        window.location.href = "search.html";
-    }
+    // function firstsearch() {
+    //     window.location.href = "search.html";
+    // }
 //mapbox------------------------------------------------------------------------------------------------------------------------------
    function getMapInfo(){
 
@@ -39,10 +39,10 @@ $(document).ready(function(){
          // var zoom = map.transform.zoom
          // console.log(centerLng)
          // console.log(zoom)
-       
+
    }
 
-  
+
    createMap([-72.9808, 40.7648])
 
 
@@ -71,9 +71,9 @@ $(document).ready(function(){
 
             drawData()
 
-    }
+    };
 
-  
+
 
 //ONBOARD----------------------------------------------------------------------------------------------------------------------------
     $("#firstsearch").click(firstsearch);
@@ -92,7 +92,7 @@ $(document).ready(function(){
                 'apikey': "aca334dc11f0a75eede8b6a5842796ab",
                 'accept': 'application/json'
             },
-           
+
         }).done(function(data){
            console.log(data)
             for (var i = 0; i < 20; i++) {
@@ -103,7 +103,7 @@ $(document).ready(function(){
                             .addTo(map)
             }
         })
-    }   
+    }
 
 
 
