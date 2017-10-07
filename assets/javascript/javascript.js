@@ -6,9 +6,9 @@ $(document).ready(function(){
     var map;
     var zoom
 
-    // function firstsearch() {
-    //     window.location.href = "search.html";
-    // }
+    function firstsearch() {
+        window.location.href = "search.html";
+    }
 //mapbox------------------------------------------------------------------------------------------------------------------------------
    function getMapInfo(){
 
@@ -76,7 +76,7 @@ $(document).ready(function(){
 
 
 //ONBOARD----------------------------------------------------------------------------------------------------------------------------
-    // $("#firstsearch").click(firstsearch);
+    $("#firstsearch").click(firstsearch);
 
  // create function for click event ,using property snapshot under proerty extended
     function drawData(){
