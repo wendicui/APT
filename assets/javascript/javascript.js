@@ -1,115 +1,68 @@
 $(document).ready(function(){
 
-    var latitude;
-    var longitude;
-    var center;
-    var map;
-    var zoom
+
 
     function firstsearch() {
         window.location.href = "search.html";
     }
-//mapbox------------------------------------------------------------------------------------------------------------------------------
-   function getMapInfo(){
 
-    latitude = map.transform.center.lat
-    longitude = map.transform.center.lng
-    zoom = map.transform.zoom
+mapboxgl.accessToken = 'pk.eyJ1IjoicnVkY2tzOTEiLCJhIjoiY2o4ZHE1YXZtMHQ2NDJ4bW8xbGJzYmZrOCJ9.kGjczis6tYLYQLDnoRt_dg';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v9',
+    center: [-74.50, 40], // starting position
+    zoom: 9 // starting zoom
+});
 
-    console.log(latitude)
-    console.log(zoom)
-   }
-
-   function createMap(center){
-        mapboxgl.accessToken = 'pk.eyJ1IjoicnVkY2tzOTEiLCJhIjoiY2o4ZHE1YXZtMHQ2NDJ4bW8xbGJzYmZrOCJ9.kGjczis6tYLYQLDnoRt_dg';
-        map = new mapboxgl.Map({
-            container: 'map', // container id
-            style: 'mapbox://styles/mapbox/streets-v9',
-            center: center, // starting position
-            zoom: 12 // starting zoom
-        });
-
-    // Add zoom and rotation controls to the map.
-         map.addControl(new mapboxgl.NavigationControl());
-
-         map.on("zoom", getMapInfo)
-
-         // var centerLat = map.transform.center.lat
-         // var centerLng = map.transform.center.lng
-         // var zoom = map.transform.zoom
-         // console.log(centerLng)
-         // console.log(zoom)
-
-   }
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
 
 
-   createMap([-72.9808, 40.7648])
-
-
-
-    //get gocation of the user input, to center map and generate output for onboard
-    function createGeo(){
-        var accessToken = "pk.eyJ1Ijoic3BoMW54ZWQiLCJhIjoiY2o4OXI5NXpvMDZ6aTMzbWswaTFkMDNhZSJ9.AiNtXZkRzbZk-8d4PQJLww"
-        var location = $("input").val().trim()
-        var url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${accessToken}`
-
-        $.ajax({
-            url:url,
-            method:"get"
-        }).done(setGeo)
-
-    }
-
-
-    function setGeo(data){
-
-            latitude = data.features[0].center[1];
-            longitude = data.features[0].center[0];
-            map.flyTo({
-                center:[longitude, latitude]
-            })
-
-            drawData()
-
-    };
-
-
-
-//ONBOARD----------------------------------------------------------------------------------------------------------------------------
     $("#firstsearch").click(firstsearch);
 
- // create function for click event ,using property snapshot under proerty extended
+ // create function for click event
     function drawData(){
-        console.log(longitude);
-        console.log(latitude);
-        var radius = "3"
-        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT&orderby=calendardate&PageSize=20`
-        console.log(url)
+        console.log("working")
+        var address1 = "468%20SEQUOIA%20DR"
+        var address2 = "SMYRNA%2C%20DE"
+        var radius = "20"
+        var min
+        var max
+
+
+        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/
+        assessment/snapshot?address1=${address1}&address2=${address2}
+        &radius=${radius}`
+
         $.ajax({
             url:url,
             method:"get",
             headers:{
-                'apikey': "aca334dc11f0a75eede8b6a5842796ab",
-                'accept': 'application/json'
-            },
-
-        }).done(function(data){
-           console.log(data)
-            for (var i = 0; i < 20; i++) {
-                latitude = data.property[i].location.latitude;
-                longitude = data.property[i].location.longitude;
-                var marker = new mapboxgl.Marker()
-                            .setLngLat([longitude,latitude])
-                            .addTo(map)
+                'apikey': "aca334dc11f0a75eede8b6a5842796ab"
             }
+        }).done(function(data){
+            console.log(data)
         })
-    }
+}
 
 
 
-    $("button").on("click", createGeo)
+    $("button").on("click", drawData)
 
 });
 
 
+//Save search addresses onto user local storage
 
+$("#search-box").on("click", function(event) {
+    event.preventDefault();
+    var userSearch = $("#search-box").val().trim();
+    
+        localStorage.setItem("search", userSearch);
+    
+        $("#search-history").html(localStorage.getItem("search"));
+    
+        });
+    
+        $("#search-history").html(localStorage.getItem("search"));
+    
