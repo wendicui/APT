@@ -56,8 +56,9 @@
     width: 30%;
     margin: 0;
     padding: 0;
-    box-shadow: 10px 10px 5px #BD6AEE;
+    
 }
+
 
 body {
     background-image: url("../images/cityview2.JPG");
@@ -82,12 +83,12 @@ body {
     background-color: rgba(0,0,0,0.3);
 }
 
-
  /*Search Page */
  #map {
     background-image: url("../images/map.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    left: 95%; 
  }
 
  .searchbox {
@@ -111,7 +112,9 @@ body {
     width: 30%; 
     left: 12%;
     top: 55%;
+
 }
+
 
 
 .mapboxgl-marker{
