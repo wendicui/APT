@@ -8,6 +8,7 @@ $(document).ready(function(){
     var get;
     var timer
 
+
     function firstsearch() {
         window.location.href = "search.html";
     }
@@ -104,6 +105,26 @@ $(document).ready(function(){
    
 
  // create function for click event ,using property snapshot under proerty extended
+    function detail(){
+        console.log("working")
+        var line1 = encodeURIComponent($(this).data-address1)
+        var line2 = encodeURIComponent($(this).data-address2)
+        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/detail?address1=${line1}&address2=${line2}`
+        console.log(url)
+        // $.ajax({
+        //     url:url,
+        //     method:"get",
+        //     headers:{
+        //         'apikey': "aca334dc11f0a75eede8b6a5842796ab",
+        //         'accept': 'application/json'
+        //     },
+
+        // }).done
+
+
+    }
+
+
     function drawData(){
     
         console.log(zoom);
@@ -127,24 +148,33 @@ $(document).ready(function(){
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
                 
-
-                var marker = new mapboxgl.Marker()
-                            .setLngLat([longitude,latitude])
-                            .addTo(map)
-
             //create pop-up
                 var popUp = new mapboxgl.Popup()
-                    .setText(`Excellent choice! This apartment is
-                        located on ${data.property[i].oneLine}`)
+                    .setHTML('Excellent choice!')
+
+                var newDiv = document.createElement('div')
+                newDiv.className = "click"
+                newDiv.dataset.address1 = data.property[i].address.line1;
+                newDiv.dataset.address2 = data.property[i].address.line2;
+            
+                var marker = new mapboxgl.Marker(newDiv)
+                            .setLngLat([longitude,latitude])
+                            .setPopup(popUp)
+                            .addTo(map)
+
+         
 
             }
         })
     }
 
 
+    
+
 
     $("button").on("click", createGeo)
-
+   
+    $(".click").on("click", detail)
 
 
 });
