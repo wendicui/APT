@@ -35,7 +35,7 @@ $(document).ready(function(){
         mapboxgl.accessToken = 'pk.eyJ1IjoicnVkY2tzOTEiLCJhIjoiY2o4ZHE1YXZtMHQ2NDJ4bW8xbGJzYmZrOCJ9.kGjczis6tYLYQLDnoRt_dg';
         map = new mapboxgl.Map({
             container: 'map', // container id
-            style: 'mapbox://styles/mapbox/streets-v9',
+            style: 'mapbox://styles/mapbox/light-v9',
             center: center, // starting position
             zoom: 12 // starting zoom
         });
@@ -53,7 +53,13 @@ $(document).ready(function(){
 
    createMap([-72.9808, 40.7648])
 
+   //change map style
 
+
+    $(".style").on("click", function(){
+        console.log("working")
+        map.setStyle('mapbox://stles/mapbox/' + $(this).attr("id") +'-v9')
+    })
 
     //get gocation of the user input, to center map and generate output for onboard
     function createGeo(){
@@ -82,15 +88,15 @@ $(document).ready(function(){
     };
 //Save search addresses onto user local storage
 
-$("#search-box").on("click", function(event) {
-    event.preventDefault();
-    var userSearch = $("#search-box").val().trim();
-    
-        localStorage.setItem("search", userSearch);
-    
-        $("#search-history").html(localStorage.getItem("search"));
-    
-        });
+    $("#search-box").on("click", function(event) {
+        event.preventDefault();
+        var userSearch = $("#search-box").val().trim();
+        
+            localStorage.setItem("search", userSearch);
+        
+            $("#search-history").html(localStorage.getItem("search"));
+        
+            });
   
 
 
@@ -115,13 +121,22 @@ $("#search-box").on("click", function(event) {
             },
 
         }).done(function(data){
+            //add marker to map
            console.log(data)
             for (var i = 0; i < data.property.length; i++) {
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
+                
+
                 var marker = new mapboxgl.Marker()
                             .setLngLat([longitude,latitude])
                             .addTo(map)
+
+            //create pop-up
+                var popUp = new mapboxgl.Popup()
+                    .setText(`Excellent choice! This apartment is
+                        located on ${data.property[i].oneLine}`)
+
             }
         })
     }
@@ -129,6 +144,8 @@ $("#search-box").on("click", function(event) {
 
 
     $("button").on("click", createGeo)
+
+
 
 });
 

@@ -59,6 +59,19 @@
     
 }
 
+#menu {
+    position: absolute;
+    z-index: 3;
+}
+
+.style{
+    display: inline-block;
+    background: #fff;
+    margin:10px;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 6px;
+}
 
 body {
     background-image: url("../images/cityview2.JPG");
