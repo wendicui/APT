@@ -11,6 +11,8 @@ $(document).ready(function(){
     function firstsearch() {
         window.location.href = "search.html";
     }
+
+    $("#firstsearch").click(firstsearch);
 //mapbox------------------------------------------------------------------------------------------------------------------------------
    function checkGet(){
         clearTimeout(timer);
@@ -21,10 +23,11 @@ $(document).ready(function(){
 
    function getMapInfo(){
     
-        latitude = map.transform.center.lat
-        longitude = map.transform.center.lng
-        zoom = map.transform.zoom
-        console.log(latitude)
+        latitude = map.transform.center.lat;
+        longitude = map.transform.center.lng;
+        zoom = map.transform.zoom;
+        console.log(latitude);
+        drawData();
         
    }
 
@@ -92,14 +95,16 @@ $("#search-box").on("click", function(event) {
 
 
 //ONBOARD----------------------------------------------------------------------------------------------------------------------------
-    $("#firstsearch").click(firstsearch);
+   
 
  // create function for click event ,using property snapshot under proerty extended
     function drawData(){
-        console.log(longitude);
-        console.log(latitude);
-        var radius = `${zoom/4}`
-        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT&orderby=calendardate&PageSize=20`
+    
+        console.log(zoom);
+        var radius = `${4 - zoom/4}`
+        if (radius < 0){ radius = 0.1};
+        console.log(radius)
+        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT&orderby=publisheddate&PageSize=20`
         console.log(url)
         $.ajax({
             url:url,
@@ -111,7 +116,7 @@ $("#search-box").on("click", function(event) {
 
         }).done(function(data){
            console.log(data)
-            for (var i = 0; i < 20; i++) {
+            for (var i = 0; i < data.property.length; i++) {
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
                 var marker = new mapboxgl.Marker()

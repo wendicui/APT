@@ -85,7 +85,7 @@ body {
 
  /*Search Page */
  #map {
-    background-image: url("../images/map.jpg");
+    /*background-image: url("../images/map.jpg");*/
     background-repeat: no-repeat;
     background-size: cover;
     left: 95%; 
