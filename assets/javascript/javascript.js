@@ -195,6 +195,8 @@ $(document).ready(function(){
                     "properties": {
                         "address1": data.property[i].address.line1,
                         "address2": data.property[i].address.line2,
+                        "geo1":longitude,
+                        "geo2":latitude
                     }
             }
             geojson['features'].push(newFeature);
@@ -246,6 +248,11 @@ $(document).ready(function(){
             line1 = features[0].properties.address1;
             line2 = features[0].properties.address2;
             detail()
+            features[0].properties.geo1
+             // var popUp = new mapboxgl.Popup()
+             //      .setHTML(`Excellent choice!`)
+             //      .setLngLat(features[0].properties.geo)
+             //      .addTo(map)
               
          });
 
