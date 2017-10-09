@@ -96,9 +96,9 @@ $(document).ready(function(){
     };
 //Save search addresses onto user local storage
 
-    $(".form-control input-lg streetname").on("click", function(event) {
+    $(".streetname").on("click", function(event) {
         event.preventDefault();
-        var userSearch = $(".form-control input-lg streetname").val().trim();
+        var userSearch = $(".streetname").val().trim();
         
             localStorage.setItem("search", userSearch);
         
