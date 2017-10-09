@@ -33,7 +33,7 @@ $(document).ready(function(){
    }
 
    function createMap(center){
-        mapboxgl.accessToken = 'pk.eyJ1IjoicnVkY2tzOTEiLCJhIjoiY2o4ZHE1YXZtMHQ2NDJ4bW8xbGJzYmZrOCJ9.kGjczis6tYLYQLDnoRt_dg';
+        mapboxgl.accessToken = 'pk.eyJ1Ijoid2VuZGljdWkiLCJhIjoiY2o4amEzb2VtMTdsbjMybXhnY292c2FmMSJ9.ZxnI5GaeWI4IFEPm1a8wrA';
         map = new mapboxgl.Map({
             container: 'map', // container id
             style: 'mapbox://styles/mapbox/light-v9',
@@ -105,34 +105,39 @@ $(document).ready(function(){
    
 
  // create function for click event ,using property snapshot under proerty extended
-    function detail(){
-        console.log("working")
-        var line1 = encodeURIComponent($(this).data-address1)
-        var line2 = encodeURIComponent($(this).data-address2)
-        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/detail?address1=${line1}&address2=${line2}`
-        console.log(url)
-        // $.ajax({
-        //     url:url,
-        //     method:"get",
-        //     headers:{
-        //         'apikey': "aca334dc11f0a75eede8b6a5842796ab",
-        //         'accept': 'application/json'
-        //     },
+    //create the shell of database
+    var geojson = {};
+    geojson['type'] = 'FeatureCollection';
+    geojson['features'] = [];
 
-        // }).done
+    function loadIcon(geodata){       
+        map.loadImage('https://images.vexels.com/media/users/3/140527/isolated/preview/449b95d58f554656b159dd3ca21ab123-home-round-icon-by-vexels.png', function(error, image) {
+                    if (error) throw error;
+                    map.addImage('cat', image);
+                    map.addLayer({
+                        "id": "points",
+                        "type": "symbol",
+                        "source": {
+                            "type": "geojson",
+                            "data": geodata
+                        },
+                        "layout": {
+                            "icon-image": "cat",
+                            "icon-size": 0.25,
 
-
+                        }
+                    });
+                });
+        console.log(map)
     }
-
 
     function drawData(){
     
-        console.log(zoom);
         var radius = `${4 - zoom/4}`
         if (radius < 0){ radius = 0.1};
-        console.log(radius)
+        //console.log(radius)
         var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT&orderby=publisheddate&PageSize=20`
-        console.log(url)
+        //console.log(url)
         $.ajax({
             url:url,
             method:"get",
@@ -147,27 +152,64 @@ $(document).ready(function(){
             for (var i = 0; i < data.property.length; i++) {
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
-                
-            //create pop-up
-                var popUp = new mapboxgl.Popup()
-                    .setHTML('Excellent choice!')
+    // //one way to add points to map, yet not clickable    
+    //         //create pop-up
+    //             var popUp = new mapboxgl.Popup()
+    //                 .setHTML('Excellent choice!')
 
-                var newDiv = document.createElement('div')
-                newDiv.className = "click"
-                newDiv.dataset.address1 = data.property[i].address.line1;
-                newDiv.dataset.address2 = data.property[i].address.line2;
+    //             var newDiv = document.createElement('div')
+    //             newDiv.className = "click" 
+    //             newDiv.dataset.address1 = data.property[i].address.line1;
+    //             newDiv.dataset.address2 = data.property[i].address.line2;
             
-                var marker = new mapboxgl.Marker(newDiv)
-                            .setLngLat([longitude,latitude])
-                            .setPopup(popUp)
-                            .addTo(map)
-
-         
-
+    //             var marker = new mapboxgl.Marker(newDiv)
+    //                         .setLngLat([longitude,latitude])
+    //                         .setPopup(popUp)
+    //                         .addTo(map)
+    //         }
+    //use layer and geojson to create markers,
+            var newFeature = {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [latitude,longitude]
+                    },
+                    "properties": {
+                        "address1": data.property[i].address.line1,
+                        "address2": data.property[i].address.line2,
+                    }
             }
+            geojson['features'].push(newFeature);
+            console.log(geojson)
+            }
+            
+            //create layer of markers
+
+             loadIcon(geojson)                  
+
+            
         })
     }
 
+
+        function detail(){
+            console.log("working")
+            var line1 = encodeURIComponent($(this).data-address1)
+            var line2 = encodeURIComponent($(this).data-address2)
+            var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/detail?address1=${line1}&address2=${line2}`
+            console.log(url)
+            // $.ajax({
+            //     url:url,
+            //     method:"get",
+            //     headers:{
+            //         'apikey': "aca334dc11f0a75eede8b6a5842796ab",
+            //         'accept': 'application/json'
+            //     },
+
+            // }).done
+
+
+    }
 
     
 
@@ -175,6 +217,10 @@ $(document).ready(function(){
     $("button").on("click", createGeo)
    
     $(".click").on("click", detail)
+
+   
+    
+    //setTimeout(function(){map.removeLayer("points")},5000)
 
 
 });
