@@ -232,51 +232,22 @@ $(document).ready(function(){
     }
 
     
-
-
     $("button").on("click", createGeo)
    
     $(".click").on("click", detail)
 
-    $("#trial").on("click", function(){console.log("w")})
-
        map.on('click', function (e) {
-        // Use featuresAt to get features within a given radius of the click event
-        // Use layer option to avoid getting results from other layers
+            //box for the click area
              var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
              var features = map.queryRenderedFeatures(bbox, {layer: 'points'})
-                // if there are features within the given radius of the click event,
-                // fly to the location of the click event
-                
-            console.log(features)
+                      
             //map.flyTo({center: features[0].geometry.coordinates});
 
             line1 = features[0].properties.address1;
             line2 = features[0].properties.address2;
             detail()
-
-                
+              
          });
-
-    
-
-
-    // var trial = {
-            
-    //         "type": "FeatureCollection",
-    //         "features": [{
-    //             "type": "Feature",
-    //             "geometry": {
-    //                 "type": "Point",
-    //                 "coordinates": [-72.9808, 40.7648]
-    //             }
-    //         }]
-    //     }
-   
-
-    // loadIcon(trial)
-    
-    //setTimeout(function(){map.removeLayer("points")},5000)
 
 
 });
