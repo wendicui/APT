@@ -47,13 +47,12 @@ $(document).ready(function(){
          map.on("zoom", checkGet)
          map.on("drag", checkGet)
          map.on("pan", checkGet)
-
-
    }
 
 
    createMap([-72.9808, 40.7648])
 
+      
    //change map style
 
 
@@ -112,24 +111,37 @@ $(document).ready(function(){
     };
 
 
-    function loadIcon(geodata){       
-        map.loadImage('https://images.vexels.com/media/users/3/140527/isolated/preview/449b95d58f554656b159dd3ca21ab123-home-round-icon-by-vexels.png', function(error, image) {
+   map.on("load",function(){
+//    add image
+      map.loadImage('https://images.vexels.com/media/users/3/140527/isolated/preview/449b95d58f554656b159dd3ca21ab123-home-round-icon-by-vexels.png', function(error, image) {
                     if (error) throw error;
                     map.addImage('icon', image);
+       })
+      map.addSource('list',{
+                            "type": "geojson",
+                            "data": geojson
+                        },)
+   })
+
+    function loadIcon(){   
+        if(map.getLayer("points")){map.removeLayer("points");}
+        if(map.getSource('list')){map.removeSource('list')}
+                  map.addSource('list',{
+                        "type": "geojson",
+                        "data": geojson
+                    },)
+              
                     map.addLayer({
                         "id": "points",
                         "type": "symbol",
-                        "source": {
-                            "type": "geojson",
-                            "data": geodata
-                        },
+                        "source": 'list',
                         "layout": {
                             "icon-image": "icon",
                             "icon-size": 0.05,
 
                         }
                     });
-                });
+                // });
         console.log(map)
     }
 
