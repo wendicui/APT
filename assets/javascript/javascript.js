@@ -152,40 +152,40 @@ $(document).ready(function(){
             for (var i = 0; i < data.property.length; i++) {
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
-    // //one way to add points to map, yet not clickable    
-    //         //create pop-up
-    //             var popUp = new mapboxgl.Popup()
-    //                 .setHTML('Excellent choice!')
+    //one way to add points to map, yet not clickable    
+            //create pop-up
+                var popUp = new mapboxgl.Popup()
+                    .setHTML('Excellent choice!')
 
-    //             var newDiv = document.createElement('div')
-    //             newDiv.className = "click" 
-    //             newDiv.dataset.address1 = data.property[i].address.line1;
-    //             newDiv.dataset.address2 = data.property[i].address.line2;
+                var newDiv = document.createElement('div')
+                newDiv.className = "click" 
+                newDiv.dataset.address1 = data.property[i].address.line1;
+                newDiv.dataset.address2 = data.property[i].address.line2;
             
-    //             var marker = new mapboxgl.Marker(newDiv)
-    //                         .setLngLat([longitude,latitude])
-    //                         .setPopup(popUp)
-    //                         .addTo(map)
-    //         }
+                var marker = new mapboxgl.Marker(newDiv)
+                            .setLngLat([longitude,latitude])
+                            .setPopup(popUp)
+                            .addTo(map)
+            }
     //use layer and geojson to create markers,
-            var newFeature = {
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [latitude,longitude]
-                    },
-                    "properties": {
-                        "address1": data.property[i].address.line1,
-                        "address2": data.property[i].address.line2,
-                    }
-            }
-            geojson['features'].push(newFeature);
-            console.log(geojson)
-            }
+            // var newFeature = {
+            //         "type": "Feature",
+            //         "geometry": {
+            //             "type": "Point",
+            //             "coordinates": [latitude,longitude]
+            //         },
+            //         "properties": {
+            //             "address1": data.property[i].address.line1,
+            //             "address2": data.property[i].address.line2,
+            //         }
+            // }
+            // geojson['features'].push(newFeature);
+            // console.log(geojson)
+            // }
             
-            //create layer of markers
+            // //create layer of markers
 
-             loadIcon(geojson)                  
+            //  loadIcon(geojson)                  
 
             
         })

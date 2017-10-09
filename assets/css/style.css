@@ -135,7 +135,8 @@ body {
     height:25px;
     border-radius: 50%;
     cursor:pointer;
-    background-color: red;
+    background-image: url("../images/marker.png");
+    background-size: cover;
 
 }
 
