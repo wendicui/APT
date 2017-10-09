@@ -6,7 +6,9 @@ $(document).ready(function(){
     var map;
     var zoom;
     var get;
-    var timer
+    var timer;
+    var line1
+    var line2
 
 
     function firstsearch() {
@@ -57,8 +59,14 @@ $(document).ready(function(){
 
 
     $(".style").on("click", function(){
-        console.log("working")
+       //  var style = map.getStyle()
+       // var layers = map.getStyle().layers.[151];
+       //  var src = map.getStyle().sources.list
+       //  console.log(style)
         map.setStyle('mapbox://stles/mapbox/' + $(this).attr("id") +'-v9')
+      //  map.getStyle().layers.[151]= layers
+        // map.getStyle().sources.list = src
+
     })
 
     //get gocation of the user input, to center map and generate output for onboard
@@ -117,20 +125,18 @@ $(document).ready(function(){
                     if (error) throw error;
                     map.addImage('icon', image);
        })
-      map.addSource('list',{
-                            "type": "geojson",
-                            "data": geojson
-                        },)
+   
    })
 
     function loadIcon(){   
         if(map.getLayer("points")){map.removeLayer("points");}
         if(map.getSource('list')){map.removeSource('list')}
+
                   map.addSource('list',{
                         "type": "geojson",
                         "data": geojson
                     },)
-              
+
                     map.addLayer({
                         "id": "points",
                         "type": "symbol",
@@ -141,8 +147,6 @@ $(document).ready(function(){
 
                         }
                     });
-                // });
-        console.log(map)
     }
 
     function drawData(){
@@ -208,19 +212,21 @@ $(document).ready(function(){
 
         function detail(){
             console.log("working")
-            var line1 = encodeURIComponent($(this).data-address1)
-            var line2 = encodeURIComponent($(this).data-address2)
+            line1 = encodeURIComponent(line1)
+            line2 = encodeURIComponent(line2)
             var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/detail?address1=${line1}&address2=${line2}`
             console.log(url)
-            // $.ajax({
-            //     url:url,
-            //     method:"get",
-            //     headers:{
-            //         'apikey': "aca334dc11f0a75eede8b6a5842796ab",
-            //         'accept': 'application/json'
-            //     },
+            $.ajax({
+                url:url,
+                method:"get",
+                headers:{
+                    'apikey': "aca334dc11f0a75eede8b6a5842796ab",
+                    'accept': 'application/json'
+                },
 
-            // }).done
+            }).done(function(data){
+                console.log(data)
+            })
 
 
     }
@@ -233,6 +239,27 @@ $(document).ready(function(){
     $(".click").on("click", detail)
 
     $("#trial").on("click", function(){console.log("w")})
+
+       map.on('click', function (e) {
+        // Use featuresAt to get features within a given radius of the click event
+        // Use layer option to avoid getting results from other layers
+             var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
+             var features = map.queryRenderedFeatures(bbox, {layer: 'points'})
+                // if there are features within the given radius of the click event,
+                // fly to the location of the click event
+                
+            console.log(features)
+            //map.flyTo({center: features[0].geometry.coordinates});
+
+            line1 = features[0].properties.address1;
+            line2 = features[0].properties.address2;
+            detail()
+
+                
+         });
+
+    
+
 
     // var trial = {
             
