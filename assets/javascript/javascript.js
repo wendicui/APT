@@ -47,13 +47,12 @@ $(document).ready(function(){
          map.on("zoom", checkGet)
          map.on("drag", checkGet)
          map.on("pan", checkGet)
-
-
    }
 
 
    createMap([-72.9808, 40.7648])
 
+      
    //change map style
 
 
@@ -106,28 +105,43 @@ $(document).ready(function(){
 
  // create function for click event ,using property snapshot under proerty extended
     //create the shell of database
-    var geojson = {};
-    geojson['type'] = 'FeatureCollection';
-    geojson['features'] = [];
+    var geojson = {
+        "type":  'FeatureCollection',
+        "features":[]
+    };
 
-    function loadIcon(geodata){       
-        map.loadImage('https://images.vexels.com/media/users/3/140527/isolated/preview/449b95d58f554656b159dd3ca21ab123-home-round-icon-by-vexels.png', function(error, image) {
+
+   map.on("load",function(){
+//    add image
+      map.loadImage('https://images.vexels.com/media/users/3/140527/isolated/preview/449b95d58f554656b159dd3ca21ab123-home-round-icon-by-vexels.png', function(error, image) {
                     if (error) throw error;
-                    map.addImage('cat', image);
+                    map.addImage('icon', image);
+       })
+      map.addSource('list',{
+                            "type": "geojson",
+                            "data": geojson
+                        },)
+   })
+
+    function loadIcon(){   
+        if(map.getLayer("points")){map.removeLayer("points");}
+        if(map.getSource('list')){map.removeSource('list')}
+                  map.addSource('list',{
+                        "type": "geojson",
+                        "data": geojson
+                    },)
+              
                     map.addLayer({
                         "id": "points",
                         "type": "symbol",
-                        "source": {
-                            "type": "geojson",
-                            "data": geodata
-                        },
+                        "source": 'list',
                         "layout": {
-                            "icon-image": "cat",
-                            "icon-size": 0.25,
+                            "icon-image": "icon",
+                            "icon-size": 0.05,
 
                         }
                     });
-                });
+                // });
         console.log(map)
     }
 
@@ -136,7 +150,7 @@ $(document).ready(function(){
         var radius = `${4 - zoom/4}`
         if (radius < 0){ radius = 0.1};
         //console.log(radius)
-        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT&orderby=publisheddate&PageSize=20`
+        var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/snapshot?latitude=${latitude}&longitude=${longitude}&radius=${radius}&propertytype=APARTMENT&orderby=calendardate&PageSize=20`
         //console.log(url)
         $.ajax({
             url:url,
@@ -153,39 +167,39 @@ $(document).ready(function(){
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
     //one way to add points to map, yet not clickable    
-            //create pop-up
-                var popUp = new mapboxgl.Popup()
-                    .setHTML('Excellent choice!')
+            // //create pop-up
+            //     var popUp = new mapboxgl.Popup()
+            //         .setHTML(`<p id = "trial" >Excellent choice!</p>`)
 
-                var newDiv = document.createElement('div')
-                newDiv.className = "click" 
-                newDiv.dataset.address1 = data.property[i].address.line1;
-                newDiv.dataset.address2 = data.property[i].address.line2;
+            //     var newDiv = document.createElement('div')
+            //     newDiv.className = "click" 
+            //     newDiv.dataset.address1 = data.property[i].address.line1;
+            //     newDiv.dataset.address2 = data.property[i].address.line2;
             
-                var marker = new mapboxgl.Marker(newDiv)
-                            .setLngLat([longitude,latitude])
-                            .setPopup(popUp)
-                            .addTo(map)
-            }
+            //     var marker = new mapboxgl.Marker(newDiv)
+            //                 .setLngLat([longitude,latitude])
+            //                 .setPopup(popUp)
+            //                 .addTo(map)
+            // }
     //use layer and geojson to create markers,
-            // var newFeature = {
-            //         "type": "Feature",
-            //         "geometry": {
-            //             "type": "Point",
-            //             "coordinates": [latitude,longitude]
-            //         },
-            //         "properties": {
-            //             "address1": data.property[i].address.line1,
-            //             "address2": data.property[i].address.line2,
-            //         }
-            // }
-            // geojson['features'].push(newFeature);
-            // console.log(geojson)
-            // }
+            var newFeature = {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [longitude, latitude]
+                    },
+                    "properties": {
+                        "address1": data.property[i].address.line1,
+                        "address2": data.property[i].address.line2,
+                    }
+            }
+            geojson['features'].push(newFeature);
+            console.log(geojson)
+            }
             
-            // //create layer of markers
+            //create layer of markers
 
-            //  loadIcon(geojson)                  
+            loadIcon(geojson)                  
 
             
         })
@@ -218,7 +232,22 @@ $(document).ready(function(){
    
     $(".click").on("click", detail)
 
+    $("#trial").on("click", function(){console.log("w")})
+
+    // var trial = {
+            
+    //         "type": "FeatureCollection",
+    //         "features": [{
+    //             "type": "Feature",
+    //             "geometry": {
+    //                 "type": "Point",
+    //                 "coordinates": [-72.9808, 40.7648]
+    //             }
+    //         }]
+    //     }
    
+
+    // loadIcon(trial)
     
     //setTimeout(function(){map.removeLayer("points")},5000)
 
