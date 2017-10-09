@@ -228,6 +228,15 @@ $(document).ready(function(){
 
             }).done(function(data){
                 console.log(data)
+                $(".searchbox").html(`Excellent Choice!<br>
+                    You have chosed the apartment at:<br>
+                    ${data.property[0].address.line1}<br>
+                    ${data.property[0].address.line2}<br>
+
+                    `)
+
+
+
             })
 
 
