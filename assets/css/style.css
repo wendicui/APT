@@ -3,7 +3,7 @@
     border: solid 1px #E4E4E4;
     border-radius: 6px;
     background-color: #fff;
-    font-weight: 100; 
+    font-weight: 100;
 }
 
 #custom-search-input input{
@@ -38,9 +38,9 @@
 }
 
 #homeFind {
-    color: #ffffff; 
+    color: #ffffff;
     font-weight: 100;
-    font-size: 16; 
+    font-size: 16;
 
 }
 
@@ -56,7 +56,7 @@
     width: 30%;
     margin: 0;
     padding: 0;
-    
+
 }
 
 #menu {
@@ -70,7 +70,8 @@
     margin:10px;
     padding: 10px;
     font-family: 'Open Sans', sans-serif;
-    
+    cursor:pointer;
+
 }
 
 body {
@@ -79,20 +80,20 @@ body {
     background-position: center center;
 
     position: relative;
-    top: 0; 
+    top: 0;
     bottom: 0;
     height: 100vh;
-    z-index: -10; 
+    z-index: -10;
 
 }
 
 #hero-overlay {
-    position: absolute; 
-    top: 0; 
+    position: absolute;
+    top: 0;
     bottom: 0;
     height: 100%;
     width: 100%;
-    z-index: -5; 
+    z-index: -5;
     background-color: rgba(0,0,0,0.3);
 }
 
@@ -101,12 +102,12 @@ body {
     /*background-image: url("../images/map.jpg");*/
     background-repeat: no-repeat;
     background-size: cover;
-    left: 95%; 
+    right: 5%;
  }
 
  .searchbox {
     position: absolute;
-    width: 400px; 
+    width: 400px;
     left: 10%;
     top: 25%;
 
@@ -116,13 +117,13 @@ body {
     position: absolute;
     left:14%;
     top: 45%;
-    background-color: yellow; 
-    width: 400px; 
+    background-color: yellow;
+    width: 400px;
 }
 
 #contact-form {
     position: absolute;
-    width: 30%; 
+    width: 30%;
     left: 12%;
     top: 55%;
 
@@ -140,17 +141,20 @@ body {
 
 }
 
-.form-group { 
-    color: white;  
-    font-weight: 100; 
+.form-group {
+    color: white;
+    font-weight: 100;
  }
 
 
  .text-muted {
-    color: white; 
+    color: white;
  }
 
 .mapnone{
     display: none;
 }
 
+.localStorage{
+    background: white;
+}

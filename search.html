@@ -14,6 +14,7 @@
 
     <!-- css -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
 </head>
 <body>
 
@@ -23,13 +24,18 @@
             <h2>Search a new address</h2>
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
-                    <input type="text" class="form-control input-lg" placeholder="Address, Zip Code" />
+                    <input type="text" class="form-control input-lg streetname" placeholder="Address, Zip Code" />
                     <span class="input-group-btn">
                         <button class="btn btn-info btn-lg" type="button">
-                            <i class="glyphicon glyphicon-search"></i>
+                            <i class="glyphicon glyphicon-search icon"></i>
                         </button>
                     </span>
                 </div>
+            </div>
+            <div class="localStorage">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default deleteStorage" type="button"><i class="glyphicon glyphicon-remove"></i></button>
+                  </span>
             </div>
         </div>
     </div>
@@ -47,16 +53,15 @@
     school information, traffic, etc
 </div>
 
-<div class="col-md-6 map">
+<div class="map">
          <div id='map' style='width: 500px; height: 600px;'>
             <div id='menu'>
-
-                <div id='basic' class = "style" style="cursor:pointer">Basic</div>
-                <div id='streets' class = "style" style="cursor:pointer">Streets</div>
-                <div id='bright' class = "style" style="cursor:pointer">Bright</div>
-                <div id='light' class = "style" style="cursor:pointer">Light</div>
-                <div id='dark' class = "style" style="cursor:pointer">Dark</div>
-                <div id='satellite' class = "style" style="cursor:pointer">Satellite</div>
+                <div id='basic' class = "style" >Basic</div>
+                <div id='streets' class = "style" >Streets</div>
+                <div id='bright' class = "style" >Bright</div>
+                <div id='light' class = "style" >Light</div>
+                <div id='dark' class = "style" >Dark</div>
+                <div id='satellite' class = "style" >Satellite</div>
 
             </div>
          </div>
