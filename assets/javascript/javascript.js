@@ -125,6 +125,11 @@ $(document).ready(function(){
                     if (error) throw error;
                     map.addImage('icon', image);
        })
+
+      map.loadImage('https://cdn2.iconfinder.com/data/icons/bullet-points/64/Bulletpoint_Bullet_Listicon_Shape_Bulletfont_Glyph_Typography_Bullet_Point_Customshape_Wingding_Custom_Circle_Selection_Dot_Duble-512.png', function(error, image) {
+                    if (error) throw error;
+                    map.addImage('sub', image);
+       })
    
    })
 
@@ -170,20 +175,23 @@ $(document).ready(function(){
             for (var i = 0; i < data.property.length; i++) {
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
-    //one way to add points to map, yet not clickable    
+    //one way to add points to map,  clickable    
             // //create pop-up
-            //     var popUp = new mapboxgl.Popup()
-            //         .setHTML(`<p id = "trial" >Excellent choice!</p>`)
+                // var popUp = new mapboxgl.Popup()
+                //     .setHTML(`<p id = "trial" >Excellent choice!</p>`)
 
-            //     var newDiv = document.createElement('div')
-            //     newDiv.className = "click" 
-            //     newDiv.dataset.address1 = data.property[i].address.line1;
-            //     newDiv.dataset.address2 = data.property[i].address.line2;
+                // var newDiv = document.createElement('div')
+                // newDiv.className = "click" 
+                // newDiv.dataset.address1 = data.property[i].address.line1;
+                // newDiv.dataset.address2 = data.property[i].address.line2;
             
-            //     var marker = new mapboxgl.Marker(newDiv)
-            //                 .setLngLat([longitude,latitude])
-            //                 .setPopup(popUp)
-            //                 .addTo(map)
+                // var marker = new mapboxgl.Marker(newDiv)
+                //             .setLngLat([longitude,latitude])
+                //             .setPopup(popUp)
+                //             .addTo(map)
+                            
+                //             popUp.on("click", function(){console.log("working")})
+               
             // }
     //use layer and geojson to create markers,
             var newFeature = {
@@ -228,10 +236,13 @@ $(document).ready(function(){
 
             }).done(function(data){
                 console.log(data)
+                var info = data.property[0]
                 $(".searchbox").html(`Excellent Choice!<br>
                     You have chosed the apartment at:<br>
-                    ${data.property[0].address.line1}<br>
-                    ${data.property[0].address.line2}<br>
+                    ${info.address.line1}<br>
+                    ${info.address.line2}<br>
+                    You will have  ${info.building.summary.unitsCount} neighbors in the building<br>
+
 
                     `)
 
@@ -244,8 +255,7 @@ $(document).ready(function(){
 
     
     $("button").on("click", createGeo)
-   
-    $(".click").on("click", detail)
+  
 
        map.on('click', function (e) {
             //box for the click area
@@ -258,12 +268,46 @@ $(document).ready(function(){
             line2 = features[0].properties.address2;
             detail()
             features[0].properties.geo1
-             // var popUp = new mapboxgl.Popup()
-             //      .setHTML(`Excellent choice!`)
-             //      .setLngLat(features[0].properties.geo)
-             //      .addTo(map)
+            loadSub()
+
+            var featureSub = map.queryRenderedFeatures(bbox, {layer: 'subway'})
+
+            
+            console.log(featureSub[0].geometry.coordinates)
+
+            new mapboxgl.Popup()
+            .setLngLat(featureSub[0].geometry.coordinates)
+            .setHTML('Subway: ' + featureSub[0].properties.line)
+            .addTo(map) 
+        
               
          });
+
+       function loadSub(){
+
+          
+            if(map.getLayer("subway")){map.removeLayer("subway");}
+            if(map.getSource('subStation')){map.removeSource('subStation')}
+
+                      map.addSource('subStation',{
+                            "type": "geojson",
+                            "data": subway
+                        },)
+
+                        map.addLayer({
+                            "id": "subway",
+                            "type": "symbol",
+                            "source": 'subStation',
+                            "layout": {
+                                "icon-image": "sub",
+                                "icon-size": 0.05,
+
+                            }
+                        });
+        
+       }
+
+
 
 
 });
