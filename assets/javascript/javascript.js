@@ -260,26 +260,26 @@ $(document).ready(function(){
        map.on('click', function (e) {
             //box for the click area
              var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
-             var features = map.queryRenderedFeatures(bbox, {layer: 'points'})
+             var features = map.queryRenderedFeatures(bbox, {layer: ['points', 'subway']})
                       
             //map.flyTo({center: features[0].geometry.coordinates});
-
+            console.log(features)
             line1 = features[0].properties.address1;
             line2 = features[0].properties.address2;
             detail()
             features[0].properties.geo1
             loadSub()
 
-            var featureSub = map.queryRenderedFeatures(bbox, {layer: 'subway'})
+            // var featureSub = map.queryRenderedFeatures(bbox, {layer: 'subway'})
 
             
-            console.log(featureSub[0].geometry.coordinates)
-
-            new mapboxgl.Popup()
-            .setLngLat(featureSub[0].geometry.coordinates)
-            .setHTML('Subway: ' + featureSub[0].properties.line)
-            .addTo(map) 
-        
+            // console.log(featureSub[0].geometry.coordinates)
+            if(features[0].properties.line){
+                new mapboxgl.Popup()
+                .setLngLat(features[0].geometry.coordinates)
+                .setHTML('Subway: ' + features[0].properties.line)
+                .addTo(map) 
+            }
               
          });
 
