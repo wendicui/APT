@@ -14,8 +14,19 @@ $(document).ready(function(){
     if(localStorage.getItem("firstsearch")){
         $("input").val(localStorage.getItem("firstsearch"));
         $("#History").append(localStorage.getItem("firstsearch"))
+        // $("#History").append(localStorage.getItem("search"))
+        // console.log(localStorage.getItem("search")[0])
         createGeo();
     }
+
+     if(localStorage.getItem("search")){
+        // $("input").val(localStorage.getItem("firstsearch"));
+        // $("#History").append(localStorage.getItem("firstsearch"))
+        $("#History").append(localStorage.getItem("search"))
+        // console.log(localStorage.getItem("search")[0])
+        // createGeo();
+    }
+
 
 
     function firstsearch() {
