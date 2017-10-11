@@ -29,18 +29,18 @@ $(document).ready(function(){
    function checkGet(){
         clearTimeout(timer);
         timer = setTimeout(getMapInfo,2000)
-        
+
    }
 
 
    function getMapInfo(){
-    
+
         latitude = map.transform.center.lat;
         longitude = map.transform.center.lng;
         zoom = map.transform.zoom;
         console.log(latitude);
         drawData();
-        
+
    }
 
    function createMap(center){
@@ -63,7 +63,7 @@ $(document).ready(function(){
 
    createMap([-72.9808, 40.7648])
 
-      
+
    //change map style
 
 
@@ -111,24 +111,24 @@ $(document).ready(function(){
         var userSearch = $(".streetname").val().trim();
 
        // searchBase.unshift(userSearch)
-        
+
             localStorage.setItem("search", userSearch);
 
             var newSearch = localStorage.getItem("search")
-     
-        
+
+
             var newSpan = $( "<span > " + newSearch + '</span>')
             console.log(newSearch[0])
             newSpan.addClass("cities")
 
-            $("#History").append(newSpan)   
+            $("#History").append(newSpan)
             });
-  
+
 
 
 
 //ONBOARD----------------------------------------------------------------------------------------------------------------------------
-   
+
 
  // create function for click event ,using property snapshot under proerty extended
     //create the shell of database
@@ -149,10 +149,10 @@ $(document).ready(function(){
                     if (error) throw error;
                     map.addImage('sub', image);
        })
-   
+
    })
 
-    function loadIcon(){   
+    function loadIcon(){
         if(map.getLayer("points")){map.removeLayer("points");}
         if(map.getSource('list')){map.removeSource('list')}
 
@@ -174,7 +174,7 @@ $(document).ready(function(){
     }
 
     function drawData(){
-    
+
         var radius = `${4 - zoom/4}`
         if (radius < 0){ radius = 0.1};
         //console.log(radius)
@@ -194,23 +194,23 @@ $(document).ready(function(){
             for (var i = 0; i < data.property.length; i++) {
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
-    //one way to add points to map,  clickable    
+    //one way to add points to map,  clickable
             // //create pop-up
                 // var popUp = new mapboxgl.Popup()
                 //     .setHTML(`<p id = "trial" >Excellent choice!</p>`)
 
                 // var newDiv = document.createElement('div')
-                // newDiv.className = "click" 
+                // newDiv.className = "click"
                 // newDiv.dataset.address1 = data.property[i].address.line1;
                 // newDiv.dataset.address2 = data.property[i].address.line2;
-            
+
                 // var marker = new mapboxgl.Marker(newDiv)
                 //             .setLngLat([longitude,latitude])
                 //             .setPopup(popUp)
                 //             .addTo(map)
-                            
+
                 //             popUp.on("click", function(){console.log("working")})
-               
+
             // }
     //use layer and geojson to create markers,
             var newFeature = {
@@ -229,12 +229,12 @@ $(document).ready(function(){
             geojson['features'].push(newFeature);
          //   console.log(geojson)
             }
-            
+
             //create layer of markers
 
-            loadIcon(geojson)                  
+            loadIcon(geojson)
 
-            
+
         })
     }
 
@@ -272,15 +272,15 @@ $(document).ready(function(){
 
     }
 
-    
+
     $(".icon").on("click", createGeo)
-  
+
 
        map.on('click', function (e) {
             //box for the click area
              var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
              var features = map.queryRenderedFeatures(bbox, {layer: ['points', 'subway']})
-                      
+
             //map.flyTo({center: features[0].geometry.coordinates});
             console.log(features)
             line1 = features[0].properties.address1;
@@ -291,20 +291,20 @@ $(document).ready(function(){
 
             // var featureSub = map.queryRenderedFeatures(bbox, {layer: 'subway'})
 
-            
+
             // console.log(featureSub[0].geometry.coordinates)
             if(features[0].properties.line){
                 new mapboxgl.Popup()
                 .setLngLat(features[0].geometry.coordinates)
                 .setHTML('Subway: ' + features[0].properties.line)
-                .addTo(map) 
+                .addTo(map)
             }
-              
+
          });
 
        function loadSub(){
 
-          
+
             if(map.getLayer("subway")){map.removeLayer("subway");}
             if(map.getSource('subStation')){map.removeSource('subStation')}
 
@@ -323,10 +323,30 @@ $(document).ready(function(){
 
                             }
                         });
-        
+
        }
 
 
+
+    map.on('mouseenter', 'points', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'points', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    map.on('mouseenter', 'subway', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'subway', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
 
 
 });

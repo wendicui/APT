@@ -126,10 +126,7 @@ body {
     width: 30%;
     left: 12%;
     top: 55%;
-
 }
-
-
 
 .mapboxgl-marker{
     width:25px;
@@ -157,4 +154,8 @@ body {
 
 .localStorage{
     background: white;
+}
+
+.deleteStorage{
+    float: right;
 }
