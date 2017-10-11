@@ -9,11 +9,11 @@ $(document).ready(function(){
     var timer;
     var line1
     var line2
-    var searchBase = [ ]
+  //  var searchBase = [ ]
 
     if(localStorage.getItem("firstsearch")){
         $("input").val(localStorage.getItem("firstsearch"));
-     
+        $("#History").append(localStorage.getItem("firstsearch"))
         createGeo();
     }
 
@@ -110,9 +110,9 @@ $(document).ready(function(){
 
         var userSearch = $(".streetname").val().trim();
 
-        searchBase.unshift(userSearch)
+       // searchBase.unshift(userSearch)
         
-            localStorage.setItem("search", searchBase);
+            localStorage.setItem("search", userSearch);
 
             var newSearch = localStorage.getItem("search")
      
