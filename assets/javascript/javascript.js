@@ -9,9 +9,18 @@ $(document).ready(function(){
     var timer;
     var line1
     var line2
+    var searchBase = [ ]
+
+    if(localStorage.getItem("firstsearch")){
+        $("input").val(localStorage.getItem("firstsearch"));
+     
+        createGeo();
+    }
 
 
     function firstsearch() {
+        var firstS= $(".streetname").val().trim();
+        localStorage.setItem("firstsearch", firstS)
         window.location.href = "search.html";
     }
 
@@ -96,16 +105,26 @@ $(document).ready(function(){
     };
 //Save search addresses onto user local storage
 
-    $(".streetname").on("click", function(event) {
+    $(".icon").on("click", function(event) {
         event.preventDefault();
+
         var userSearch = $(".streetname").val().trim();
+
+        searchBase.unshift(userSearch)
         
-            localStorage.setItem("search", userSearch);
+            localStorage.setItem("search", searchBase);
+
+            var newSearch = localStorage.getItem("search")
+     
         
-            $("#search-history").html(localStorage.getItem("search"));
-        
+            var newSpan = $( "<span > " + newSearch + '</span>')
+            console.log(newSearch[0])
+            newSpan.addClass("cities")
+
+            $("#History").append(newSpan)   
             });
   
+
 
 
 //ONBOARD----------------------------------------------------------------------------------------------------------------------------
@@ -171,7 +190,7 @@ $(document).ready(function(){
 
         }).done(function(data){
             //add marker to map
-           console.log(data)
+          // console.log(data)
             for (var i = 0; i < data.property.length; i++) {
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
@@ -208,7 +227,7 @@ $(document).ready(function(){
                     }
             }
             geojson['features'].push(newFeature);
-            console.log(geojson)
+         //   console.log(geojson)
             }
             
             //create layer of markers
@@ -225,7 +244,7 @@ $(document).ready(function(){
             line1 = encodeURIComponent(line1)
             line2 = encodeURIComponent(line2)
             var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/detail?address1=${line1}&address2=${line2}`
-            console.log(url)
+          //  console.log(url)
             $.ajax({
                 url:url,
                 method:"get",
@@ -235,7 +254,7 @@ $(document).ready(function(){
                 },
 
             }).done(function(data){
-                console.log(data)
+              //  console.log(data)
                 var info = data.property[0]
                 $(".searchbox").html(`Excellent Choice!<br>
                     You have chosed the apartment at:<br>
@@ -254,7 +273,7 @@ $(document).ready(function(){
     }
 
     
-    $("button").on("click", createGeo)
+    $(".icon").on("click", createGeo)
   
 
        map.on('click', function (e) {
