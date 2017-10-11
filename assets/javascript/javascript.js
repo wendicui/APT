@@ -27,7 +27,10 @@ $(document).ready(function(){
         // createGeo();
     }
 
-
+    $(".glyphicon-remove").click(function(){
+        $("#History").html(` <button class="btn btn-default deleteStorage" type="button"><i class="glyphicon glyphicon-remove"></i></button>  `)
+        localStorage.clear();
+    })
 
     function firstsearch() {
         var firstS= $(".streetname").val().trim();
