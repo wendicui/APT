@@ -33,11 +33,13 @@
                 </div>
             </div>
             <div class="localStorage">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default deleteStorage" type="button"><i class="glyphicon glyphicon-remove"></i></button>
+                  <span id = "History">
+                          <button class="btn btn-default deleteStorage" type="button"><i class="glyphicon glyphicon-remove"></i></button>
                   </span>
             </div>
         </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4 firebasedata">Total Search: <span class="totalSearches">0</span>     || Today's Search: <span class="dailySearches">0</span></div>
     </div>
 </div>
 <br><br>
@@ -49,7 +51,6 @@
 
 
 <!--  this will be replace by the rent api!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! and need to discuss how many search we can see-->
-
 
 <div class="map">
          <div id='map' style='width: 500px; height: 600px;'>
@@ -95,6 +96,7 @@
             </div>
         </div>
 
+<script type="text/javascript" src="assets/javascript/Subway.js"></script>
 <script type="text/javascript" src="assets/javascript/javascript.js"></script>
 <script type="text/javascript" src="assets/javascript/form.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script>

@@ -9,9 +9,32 @@ $(document).ready(function(){
     var timer;
     var line1
     var line2
+  //  var searchBase = [ ]
 
+    if(localStorage.getItem("firstsearch")){
+        $("input").val(localStorage.getItem("firstsearch"));
+        $("#History").append(localStorage.getItem("firstsearch"))
+        // $("#History").append(localStorage.getItem("search"))
+        // console.log(localStorage.getItem("search")[0])
+        createGeo();
+    }
+
+     if(localStorage.getItem("search")){
+        // $("input").val(localStorage.getItem("firstsearch"));
+        // $("#History").append(localStorage.getItem("firstsearch"))
+        $("#History").append(localStorage.getItem("search"))
+        // console.log(localStorage.getItem("search")[0])
+        // createGeo();
+    }
+
+    $(".glyphicon-remove").click(function(){
+        $("#History").html(` <button class="btn btn-default deleteStorage" type="button"><<i class="glyphicon glyphicon-remove"></i></button>  `)
+        localStorage.clear();
+    })
 
     function firstsearch() {
+        var firstS= $(".streetname").val().trim();
+        localStorage.setItem("firstsearch", firstS)
         window.location.href = "search.html";
     }
 
@@ -20,18 +43,18 @@ $(document).ready(function(){
    function checkGet(){
         clearTimeout(timer);
         timer = setTimeout(getMapInfo,2000)
-        
+
    }
 
 
    function getMapInfo(){
-    
+
         latitude = map.transform.center.lat;
         longitude = map.transform.center.lng;
         zoom = map.transform.zoom;
         console.log(latitude);
         drawData();
-        
+
    }
 
    function createMap(center){
@@ -54,7 +77,7 @@ $(document).ready(function(){
 
    createMap([-72.9808, 40.7648])
 
-      
+
    //change map style
 
 
@@ -96,20 +119,30 @@ $(document).ready(function(){
     };
 //Save search addresses onto user local storage
 
-    $(".streetname").on("click", function(event) {
+    $(".icon").on("click", function(event) {
         event.preventDefault();
+
         var userSearch = $(".streetname").val().trim();
-        
+
+       // searchBase.unshift(userSearch)
+
             localStorage.setItem("search", userSearch);
-        
-            $("#search-history").html(localStorage.getItem("search"));
-        
+
+            var newSearch = localStorage.getItem("search")
+
+
+            var newSpan = $( "<span > " + newSearch + '</span>')
+            console.log(newSearch[0])
+            newSpan.addClass("cities")
+
+            $("#History").append(newSpan)
             });
-  
+
+
 
 
 //ONBOARD----------------------------------------------------------------------------------------------------------------------------
-   
+
 
  // create function for click event ,using property snapshot under proerty extended
     //create the shell of database
@@ -125,10 +158,15 @@ $(document).ready(function(){
                     if (error) throw error;
                     map.addImage('icon', image);
        })
-   
+
+      map.loadImage('https://cdn2.iconfinder.com/data/icons/bullet-points/64/Bulletpoint_Bullet_Listicon_Shape_Bulletfont_Glyph_Typography_Bullet_Point_Customshape_Wingding_Custom_Circle_Selection_Dot_Duble-512.png', function(error, image) {
+                    if (error) throw error;
+                    map.addImage('sub', image);
+       })
+
    })
 
-    function loadIcon(){   
+    function loadIcon(){
         if(map.getLayer("points")){map.removeLayer("points");}
         if(map.getSource('list')){map.removeSource('list')}
 
@@ -150,7 +188,7 @@ $(document).ready(function(){
     }
 
     function drawData(){
-    
+
         var radius = `${4 - zoom/4}`
         if (radius < 0){ radius = 0.1};
         //console.log(radius)
@@ -166,24 +204,27 @@ $(document).ready(function(){
 
         }).done(function(data){
             //add marker to map
-           console.log(data)
+          // console.log(data)
             for (var i = 0; i < data.property.length; i++) {
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
-    //one way to add points to map, yet not clickable    
+    //one way to add points to map,  clickable
             // //create pop-up
-            //     var popUp = new mapboxgl.Popup()
-            //         .setHTML(`<p id = "trial" >Excellent choice!</p>`)
+                // var popUp = new mapboxgl.Popup()
+                //     .setHTML(`<p id = "trial" >Excellent choice!</p>`)
 
-            //     var newDiv = document.createElement('div')
-            //     newDiv.className = "click" 
-            //     newDiv.dataset.address1 = data.property[i].address.line1;
-            //     newDiv.dataset.address2 = data.property[i].address.line2;
-            
-            //     var marker = new mapboxgl.Marker(newDiv)
-            //                 .setLngLat([longitude,latitude])
-            //                 .setPopup(popUp)
-            //                 .addTo(map)
+                // var newDiv = document.createElement('div')
+                // newDiv.className = "click"
+                // newDiv.dataset.address1 = data.property[i].address.line1;
+                // newDiv.dataset.address2 = data.property[i].address.line2;
+
+                // var marker = new mapboxgl.Marker(newDiv)
+                //             .setLngLat([longitude,latitude])
+                //             .setPopup(popUp)
+                //             .addTo(map)
+
+                //             popUp.on("click", function(){console.log("working")})
+
             // }
     //use layer and geojson to create markers,
             var newFeature = {
@@ -200,14 +241,14 @@ $(document).ready(function(){
                     }
             }
             geojson['features'].push(newFeature);
-            console.log(geojson)
+         //   console.log(geojson)
             }
-            
+
             //create layer of markers
 
-            loadIcon(geojson)                  
+            loadIcon(geojson)
 
-            
+
         })
     }
 
@@ -217,7 +258,7 @@ $(document).ready(function(){
             line1 = encodeURIComponent(line1)
             line2 = encodeURIComponent(line2)
             var url = `https://search.onboard-apis.com/propertyapi/v1.0.0/property/detail?address1=${line1}&address2=${line2}`
-            console.log(url)
+          //  console.log(url)
             $.ajax({
                 url:url,
                 method:"get",
@@ -227,11 +268,14 @@ $(document).ready(function(){
                 },
 
             }).done(function(data){
-                console.log(data)
+              //  console.log(data)
+                var info = data.property[0]
                 $(".searchbox").html(`Excellent Choice!<br>
                     You have chosed the apartment at:<br>
-                    ${data.property[0].address.line1}<br>
-                    ${data.property[0].address.line2}<br>
+                    ${info.address.line1}<br>
+                    ${info.address.line2}<br>
+                    You will have  ${info.building.summary.unitsCount} neighbors in the building<br>
+
 
                     `)
 
@@ -242,29 +286,93 @@ $(document).ready(function(){
 
     }
 
-    
-    $("button").on("click", createGeo)
-   
-    $(".click").on("click", detail)
+
+    $(".icon").on("click", createGeo)
+
 
        map.on('click', function (e) {
             //box for the click area
              var bbox = [[e.point.x - 5, e.point.y - 5], [e.point.x + 5, e.point.y + 5]];
-             var features = map.queryRenderedFeatures(bbox, {layer: 'points'})
-                      
-            //map.flyTo({center: features[0].geometry.coordinates});
+             var features = map.queryRenderedFeatures(bbox, {layer: ['points', 'subway']})
 
+            //map.flyTo({center: features[0].geometry.coordinates});
+            console.log(features)
             line1 = features[0].properties.address1;
             line2 = features[0].properties.address2;
             detail()
             features[0].properties.geo1
-             // var popUp = new mapboxgl.Popup()
-             //      .setHTML(`Excellent choice!`)
-             //      .setLngLat(features[0].properties.geo)
-             //      .addTo(map)
-              
+            loadSub()
+
+            // var featureSub = map.queryRenderedFeatures(bbox, {layer: 'subway'})
+
+
+            // console.log(featureSub[0].geometry.coordinates)
+            if(features[0].properties.line){
+                new mapboxgl.Popup()
+                .setLngLat(features[0].geometry.coordinates)
+                .setHTML('Subway: ' + features[0].properties.line)
+                .addTo(map)
+            }
+
          });
 
+       function loadSub(){
+
+
+            if(map.getLayer("subway")){map.removeLayer("subway");}
+            if(map.getSource('subStation')){map.removeSource('subStation')}
+
+                      map.addSource('subStation',{
+                            "type": "geojson",
+                            "data": subway
+                        },)
+
+                        map.addLayer({
+                            "id": "subway",
+                            "type": "symbol",
+                            "source": 'subStation',
+                            "layout": {
+                                "icon-image": "sub",
+                                "icon-size": 0.05,
+
+                            }
+                        });
+
+       }
+
+
+
+    map.on('mouseenter', 'points', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'points', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    map.on('mouseenter', 'subway', function(e) {
+        // Change the cursor style as a UI indicator.
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'subway', function() {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBrzI7gkNYK7muMbNF6R8TCmVqmDMFbZLA",
+    authDomain: "projectone-21906.firebaseapp.com",
+    databaseURL: "https://projectone-21906.firebaseio.com",
+    projectId: "projectone-21906",
+    storageBucket: "projectone-21906.appspot.com",
+    messagingSenderId: "934410089770"
+  };
+  firebase.initializeApp(config);
 
 });
 
