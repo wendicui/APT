@@ -27,8 +27,9 @@ $(document).ready(function(){
         // createGeo();
     }
 
-    $(".glyphicon-remove").click(function(){
-        $("#History").html(` <button class="btn btn-default deleteStorage" type="button"><<i class="glyphicon glyphicon-remove"></i></button>  `)
+    $(document).on("click",'.glyphicon-remove', function(){
+        console.log("workinggg")
+        $("#History").html(` <button class="btn btn-default deleteStorage" type="button"><i class="glyphicon glyphicon-remove"></i></button>  `)
         localStorage.clear();
     })
 
