@@ -95,16 +95,16 @@ $(document).ready(function(){
             subPossible = map.getStyle().layers[151]
             subData = map.getStyle().sources.subStation}
 
-     
+
                console.log(map.getStyle())
-          
+
         map.setStyle('mapbox://styles/mapbox/' + $(this).attr("id") +'-v9')
          //console.log(map)
-       map.on("styledata", function(){ 
-        
-     
+       map.on("styledata", function(){
+
+
        if(!map.getLayer("points") && !map.getSource('list'))
-        {   
+        {
 
             map.loadImage('https://images.vexels.com/media/users/3/140527/isolated/preview/449b95d58f554656b159dd3ca21ab123-home-round-icon-by-vexels.png', function(error, image) {
                     if (error) throw error;
@@ -115,11 +115,11 @@ $(document).ready(function(){
                     if (error) throw error;
                     map.addImage('sub', image);
                 })
-   
+
 
             map.addSource('list',src)
              map.addLayer(layers)
-             
+
 
               if(subPossible){
 
@@ -146,7 +146,7 @@ $(document).ready(function(){
          //    console.log(map.getStyle().layers[151])
 
          // })
-        
+
 
 
     })
@@ -243,7 +243,6 @@ $(document).ready(function(){
                         "layout": {
                             "icon-image": "icon",
                             "icon-size": 0.05,
-
                         }
                     });
     }
@@ -304,12 +303,8 @@ $(document).ready(function(){
             geojson['features'].push(newFeature);
          //   console.log(geojson)
             }
-
             //create layer of markers
-
             loadIcon(geojson)
-
-
         })
     }
 
@@ -336,15 +331,10 @@ $(document).ready(function(){
                     ${info.address.line1}<br>
                     ${info.address.line2}<br>
                     You will have  ${info.building.summary.unitsCount} neighbors in the building<br>
-
-
+                    <button type="submit" class="btn btn-lg btn-success pull-right emailus" id="emailLink">Email Us &rarr;</button>
+                    <a href="iamarirosenthal@outlook.com" name="emailLink" id="emailLink"></a>
                     `)
-
-
-
             })
-
-
     }
 
 
@@ -395,7 +385,6 @@ $(document).ready(function(){
                             "layout": {
                                 "icon-image": "sub",
                                 "icon-size": 0.05,
-
                             }
                         });
 
@@ -410,7 +399,6 @@ $(document).ready(function(){
 
     map.on('mouseleave', 'points', function() {
         map.getCanvas().style.cursor = '';
-        popup.remove();
     });
 
     map.on('mouseenter', 'subway', function(e) {
@@ -420,7 +408,6 @@ $(document).ready(function(){
 
     map.on('mouseleave', 'subway', function() {
         map.getCanvas().style.cursor = '';
-        popup.remove();
     });
 
 
@@ -434,6 +421,38 @@ $(document).ready(function(){
     messagingSenderId: "934410089770"
   };
   firebase.initializeApp(config);
+
+  var database = firebase.database();
+
+  var totalclicks = 0;
+  var dailyclicks = 0;
+  var now = moment(Date);
+
+  $(".click").on("click", function(){
+    totalclicks ++;
+    dailyclicks ++;
+
+    if(now != now){
+        dailyclick === 0;
+    }
+
+    database.ref().set({
+        totalclick: totalclicks,
+        dailyclick: dailyclicks
+    });
+
+  });
+
+    database.ref().on("value", function(snapshot) {
+
+    $(".totalSearches").html(snapshot.val().totalclick);
+    $(".dailySearches").html(snapshot.val().dailyclick);
+    totalclicks = snapshot.val().totalclick;
+    dailyclicks = snapshot.val().dailyclick;
+      // Handle the errors
+    }, function(errorObject) {
+      console.log("Errors handled: " + errorObject.code);
+    });
 
 });
 
