@@ -376,4 +376,21 @@ $(document).ready(function(){
 
 });
 
+var dataRef = firebase.database();
 
+var totalSearches = '';
+var dailySearches = '';
+
+dataRef.ref().push({
+    TotalSearches: totalSearches,
+    DailySearches: dailySearches,
+    dateAdded: firebase.database.ServerValue.TIMESTAMP
+});
+
+dataRef.ref().on("child_added", function(Snapshot) {
+    
+            $('.firebasedata').append( Snapshot.val()
+                Snapshot.val().totalSearches 
+                Snapshot.val().dailySearches
+            )}
+ function(errorObject) {});
