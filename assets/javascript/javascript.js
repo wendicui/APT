@@ -82,18 +82,62 @@ $(document).ready(function(){
 
 
     $(".style").on("click", function(){
-       //  var style = map.getStyle()
-       // var layers = map.getStyle().layers.[151];
-       //  var src = map.getStyle().sources.list
-       //  console.log(style)
-        map.setStyle('mapbox://stles/mapbox/' + $(this).attr("id") +'-v9')
-      //  map.getStyle().layers.[151]= layers
-        // map.getStyle().sources.list = src
+        var style = map.getStyle()
+        var layers = map.getStyle().layers[151];
+        var src = map.getStyle().sources.list
+        console.log(src)
+        console.log(layers)
+     
+         map.setStyle('mapbox://styles/mapbox/' + $(this).attr("id") +'-v9')
+         //console.log(map)
+       map.on("styledata", function(){ 
+
+     
+       if(!map.getLayer("points") && !map.getSource('list'))
+        {   
+
+            map.loadImage('https://images.vexels.com/media/users/3/140527/isolated/preview/449b95d58f554656b159dd3ca21ab123-home-round-icon-by-vexels.png', function(error, image) {
+                    if (error) throw error;
+                    map.addImage('icon', image);
+                })
+
+             map.loadImage('https://cdn2.iconfinder.com/data/icons/bullet-points/64/Bulletpoint_Bullet_Listicon_Shape_Bulletfont_Glyph_Typography_Bullet_Point_Customshape_Wingding_Custom_Circle_Selection_Dot_Duble-512.png', function(error, image) {
+                    if (error) throw error;
+                    map.addImage('sub', image);
+                })
+   
+
+            map.addSource('list',src)
+             map.addLayer(layers)}
+              console.log(map.getStyle())
+
+       })
+
+         // map.on("load", function(){
+         //    console.log("workinghhhh")
+         //    map.loadImage('https://images.vexels.com/media/users/3/140527/isolated/preview/449b95d58f554656b159dd3ca21ab123-home-round-icon-by-vexels.png', function(error, image) {
+         //                    if (error) throw error;
+         //                    map.addImage('icon', image);
+         //       })
+
+         //    map.loadImage('https://cdn2.iconfinder.com/data/icons/bullet-points/64/Bulletpoint_Bullet_Listicon_Shape_Bulletfont_Glyph_Typography_Bullet_Point_Customshape_Wingding_Custom_Circle_Selection_Dot_Duble-512.png', function(error, image) {
+         //                    if (error) throw error;
+         //                    map.addImage('sub', image);
+         //       })
+         //    map.addSource('list',src)
+         //    map.addLayer(layers)
+
+         //    console.log(map.getStyle().layers[151])
+
+         // })
+        
+
 
     })
 
     //get gocation of the user input, to center map and generate output for onboard
     function createGeo(){
+        console.log("createGeo")
         var accessToken = "pk.eyJ1Ijoic3BoMW54ZWQiLCJhIjoiY2o4OXI5NXpvMDZ6aTMzbWswaTFkMDNhZSJ9.AiNtXZkRzbZk-8d4PQJLww"
         var location = $("input").val().trim()
         var url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json?access_token=${accessToken}`
@@ -107,6 +151,7 @@ $(document).ready(function(){
 
 
     function setGeo(data){
+console.log("setGeo")
 
             latitude = data.features[0].center[1];
             longitude = data.features[0].center[0];
@@ -188,7 +233,7 @@ $(document).ready(function(){
     }
 
     function drawData(){
-    
+        console.log("working")
         var radius = `${4 - zoom/4}`
         if (radius < 0){ radius = 0.1};
         //console.log(radius)
@@ -204,7 +249,7 @@ $(document).ready(function(){
 
         }).done(function(data){
             //add marker to map
-          // console.log(data)
+          console.log(data)
             for (var i = 0; i < data.property.length; i++) {
                 latitude = data.property[i].location.latitude;
                 longitude = data.property[i].location.longitude;
