@@ -85,14 +85,23 @@ $(document).ready(function(){
     $(".style").on("click", function(){
         var style = map.getStyle()
         var layers = map.getStyle().layers[151];
+        var subPossible
+        var subData
         var src = map.getStyle().sources.list
-        console.log(src)
-        console.log(layers)
+
+       if(map.getStyle().layers[152]){
+
+            layers = map.getStyle().layers[152]
+            subPossible = map.getStyle().layers[151]
+            subData = map.getStyle().sources.subStation}
+
      
-         map.setStyle('mapbox://styles/mapbox/' + $(this).attr("id") +'-v9')
+               console.log(map.getStyle())
+          
+        map.setStyle('mapbox://styles/mapbox/' + $(this).attr("id") +'-v9')
          //console.log(map)
        map.on("styledata", function(){ 
-
+        
      
        if(!map.getLayer("points") && !map.getSource('list'))
         {   
@@ -109,8 +118,14 @@ $(document).ready(function(){
    
 
             map.addSource('list',src)
-             map.addLayer(layers)}
-              console.log(map.getStyle())
+             map.addLayer(layers)
+             
+
+              if(subPossible){
+
+                map.addSource('subStation', subData)
+                map.addLayer(subPossible)
+              }}
 
        })
 
@@ -152,7 +167,7 @@ $(document).ready(function(){
 
 
     function setGeo(data){
-console.log("setGeo")
+//console.log("setGeo")
 
             latitude = data.features[0].center[1];
             longitude = data.features[0].center[0];
