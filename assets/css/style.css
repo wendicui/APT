@@ -159,3 +159,8 @@ body {
 .deleteStorage{
     float: right;
 }
+
+.firebasedata{
+    top: 165px;
+    right: 2%;
+}
