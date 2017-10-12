@@ -28,7 +28,7 @@ $(document).ready(function(){
     }
 
     $(".glyphicon-remove").click(function(){
-        $("#History").html(` <button class="btn btn-default deleteStorage" type="button"><i class="glyphicon glyphicon-remove"></i></button>  `)
+        $("#History").html('<i class="glyphicon glyphicon-remove"></i>')
         localStorage.clear();
     })
 
@@ -362,6 +362,17 @@ $(document).ready(function(){
         popup.remove();
     });
 
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBrzI7gkNYK7muMbNF6R8TCmVqmDMFbZLA",
+    authDomain: "projectone-21906.firebaseapp.com",
+    databaseURL: "https://projectone-21906.firebaseio.com",
+    projectId: "projectone-21906",
+    storageBucket: "projectone-21906.appspot.com",
+    messagingSenderId: "934410089770"
+  };
+  firebase.initializeApp(config);
 
 });
 
