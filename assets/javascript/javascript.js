@@ -28,7 +28,7 @@ $(document).ready(function(){
     }
 
     $(".glyphicon-remove").click(function(){
-        $("#History").html('<i class="glyphicon glyphicon-remove"></i>')
+        $("#History").html(` <button class="btn btn-default deleteStorage" type="button"><<i class="glyphicon glyphicon-remove"></i></button>  `)
         localStorage.clear();
     })
 
