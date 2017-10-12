@@ -77,7 +77,7 @@
 body {
     background-image: url("../images/cityview2.JPG");
     background-size: cover;
-    background-color: #34373a; 
+    background-color: #34373a;
     background-position: center center;
     background-repeat: no-repeat;
     position: relative;
@@ -111,13 +111,13 @@ body {
     width: 400px;
     left: 11%;
     top: 19%;
-    width: 400px; 
-    height: 200px; 
+    width: 400px;
+    height: 200px;
     background: rgba(0, 0, 0, 0.4);
     padding: 40px;
     color: white;
     /*margin: 0 auto;
-    margin-top: 200px; 
+    margin-top: 200px;
     margin-bottom: 200px;*/
     /*left: 20%; */
 
@@ -134,13 +134,13 @@ body {
     width: 400px;
     left: 15%;
     top: 55%;
-    width: 400px; 
-    height: 200px; 
+    width: 400px;
+    height: 200px;
     background: rgba(0, 0, 0, 0.4);
     padding: 40px;
     color: white;
     /*margin: 0 auto;
-    margin-top: 200px; 
+    margin-top: 200px;
     margin-bottom: 200px;*/
     /*left: 20%; */
 
@@ -151,8 +151,8 @@ body {
 
 }
 
-/*#contact-form {
-    color: white; 
+#contact-form {
+    color: white;
     position: absolute;
     width: 30%;
     left: 12%;
@@ -189,18 +189,13 @@ body {
 }
 
 .contactcontainer {
-    position: absolute; 
-    color: white; 
-    left: -2%; 
+    position: absolute;
+    color: white;
+    left: -2%;
     top: 75%;
-    height: 200px; 
+    height: 200px;
     width: 1000px;
-
 }
-
-button {
-    position: absolute; 
-    left: 15%;
 
 .deleteStorage{
     float: right;
@@ -209,4 +204,8 @@ button {
 .firebasedata{
     top: 165px;
     right: 2%;
+}
+
+.emailus{
+    left: 50%;
 }
