@@ -43,7 +43,7 @@ $(document).ready(function(){
 //mapbox------------------------------------------------------------------------------------------------------------------------------
    function checkGet(){
         clearTimeout(timer);
-        timer = setTimeout(getMapInfo,2000)
+        timer = setTimeout(getMapInfo,1000)
 
    }
 
@@ -331,8 +331,6 @@ $(document).ready(function(){
                     ${info.address.line1}<br>
                     ${info.address.line2}<br>
                     You will have  ${info.building.summary.unitsCount} neighbors in the building<br>
-                    <button type="submit" class="btn btn-lg btn-success pull-right emailus" id="emailLink">Email Us &rarr;</button>
-                    <a href="iamarirosenthal@outlook.com" name="emailLink" id="emailLink"></a>
                     `)
             })
     }
@@ -426,19 +424,13 @@ $(document).ready(function(){
 
   var totalclicks = 0;
   var dailyclicks = 0;
-  var now = moment(Date);
 
   $(".click").on("click", function(){
     totalclicks ++;
     dailyclicks ++;
 
-    if(now != now){
-        dailyclick === 0;
-    }
-
     database.ref().set({
         totalclick: totalclicks,
-        dailyclick: dailyclicks
     });
 
   });
@@ -446,9 +438,7 @@ $(document).ready(function(){
     database.ref().on("value", function(snapshot) {
 
     $(".totalSearches").html(snapshot.val().totalclick);
-    $(".dailySearches").html(snapshot.val().dailyclick);
     totalclicks = snapshot.val().totalclick;
-    dailyclicks = snapshot.val().dailyclick;
       // Handle the errors
     }, function(errorObject) {
       console.log("Errors handled: " + errorObject.code);
